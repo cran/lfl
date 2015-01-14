@@ -1,0 +1,44 @@
+useDynLib(lfl)
+
+importFrom("Rcpp", sourceCpp)
+importFrom("e1071", kurtosis, skewness)
+importFrom("foreach", foreach, "%do%", "%dopar%")
+importFrom("forecast", forecast, auto.arima, ets, rwf, thetaf)
+importFrom("plyr", colwise)
+importFrom("tseries", adf.test)
+importFrom("zoo", rollapply)
+importFrom("utils", head, tail)
+
+exportPattern("^[[:alpha:]]+")
+
+S3method("fcut", "default")
+S3method("fcut", "data.frame")
+S3method("fcut", "matrix")
+S3method("fcut", "numeric")
+
+S3method("lcut3", "default")
+S3method("lcut3", "data.frame")
+S3method("lcut3", "matrix")
+S3method("lcut3", "numeric")
+
+S3method("lcut5", "default")
+S3method("lcut5", "data.frame")
+S3method("lcut5", "matrix")
+S3method("lcut5", "numeric")
+
+S3method("cbind", "fsets")
+
+S3method("print", "fsets")
+S3method("print", "farules")
+S3method("print", "frbe")
+
+S3method("head", "fsets")
+S3method("head", "farules")
+
+S3method("tail", "fsets")
+S3method("tail", "farules")
+
+S3method("sel", "fsets")
+S3method("sel", "farules")
+
+S3method("as.matrix", "fsets")
