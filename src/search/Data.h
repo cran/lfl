@@ -3,15 +3,17 @@
  * Date:      2014/02/04 10:21
  */
 
-#ifndef __DATA_H__
-#define __DATA_H__
+#ifndef __LFL__SEARCH__DATA_H__
+#define __LFL__SEARCH__DATA_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 #include "Attribute.h"
 
 #include <stdlib.h>
+
+
+namespace lfl { namespace search {
 
 
 class Data {
@@ -23,12 +25,12 @@ private:
     
 
 public:
-    Data(size_t rowCount, size_t colCount, char tNorm, IdVector& variables)
+    Data(size_t rowCount, size_t colCount, IdVector& variables)
     {
         m_attributes.resize(colCount);
         for (size_t col = 0; col < colCount; col++) {
             Attribute *attribute =
-                new Attribute(col, tNorm, variables[col], rowCount);
+                new Attribute(col, variables[col], rowCount);
             m_attributes[col] = attribute;
         }
     }
@@ -63,4 +65,5 @@ public:
     }
 };
 
+}}
 #endif

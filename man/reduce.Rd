@@ -7,7 +7,10 @@
     the input data.
 }
 \usage{
-reduce(x, rules, ratio, parallel=FALSE)
+reduce(x, rules, ratio, 
+       tnorm = c("minimum", "product", "lukasiewicz"),
+       tconorm = c("maximum", "product", "lukasiewicz"),
+       numThreads = 1)
 }
 \arguments{
     \item{x}{
@@ -26,10 +29,16 @@ reduce(x, rules, ratio, parallel=FALSE)
         \eqn{[0, 1]} interval. Value of 1 means that the rule base coverage of the result must be
         the same as coverage of input \code{rules}. A sensible value is e.g. 0.9.
     }
-    \item{parallel}{
-        Whether the processing should be run in parallel or not. Parallelization is
-        implemented using the \code{\link[foreach]{foreach}} package. The parallel environment must be
-        set properly in advance, e.g. with the \code{\link[doMC]{registerDoMC}} function.
+    \item{tnorm}{
+        Which t-norm to use as a conjunction of antecedents. The default is minimum.
+    }
+    \item{tconorm}{
+        Which t-norm to use as a disjunction, i.e. to combine multiple antecedents to get coverage
+        of the rule base. The default is maximum.
+    }
+    \item{numThreads}{
+        How many threads to use for computation. Value higher than 1 causes that the algorithm runs
+        in several parallel threads (using the OpenMP library).
     }
 }
 \details{
@@ -45,8 +54,13 @@ reduce(x, rules, ratio, parallel=FALSE)
     Function returns an instance of class \code{\link{farules}} or a list depending on the type of
     the \code{rules} argument.
 }
-%\references{
-%}
+\references{
+    M. Burda, M. Štěpnička, Reduction of Fuzzy Rule Bases Driven by the Coverage of Training Data,
+    in: Proc. 16th World Congress of the International Fuzzy Systems
+    Association and 9th Conference of the European Society for Fuzzy
+    Logic and Technology (IFSA-EUSFLAT 2015), Advances in Intelligent
+    Systems Research, Atlantic Press, Gijon, 2015.
+}
 \author{
     Michal Burda
 }

@@ -4,17 +4,17 @@
  * Author:
  */
 
-#ifndef __ATTRIBUTE_H__
-#define __ATTRIBUTE_H__
+#ifndef __LFL__SEARCH__ATTRIBUTE_H__
+#define __LFL__SEARCH__ATTRIBUTE_H__
 
 
 #include <common.h>
-#include "AbstractFuzzyChain.h"
-#include "MinFloatFuzzyChain.h"
-#include "LukasFloatFuzzyChain.h"
-#include "ProductFloatFuzzyChain.h"
+#include "../common/Chain.h"
 
 #include <stdexcept>
+
+
+namespace lfl { namespace search {
 
 
 class Attribute {
@@ -42,23 +42,13 @@ private:
      * Chain of membership degrees where i-th value of the chain corresponds
      * to a membership degree of the i-th object to this attribute.
      */
-    AbstractFuzzyChain* m_chain;
+    lfl::Chain* m_chain;
 
 public:
-    Attribute(size_t id, char tNorm, int variable, int nRow) :
+    Attribute(size_t id, int variable, size_t nRow) :
         m_id(id),
         m_variable(variable)
-    {
-        if (tNorm == 'l') {
-            m_chain = new LukasFloatFuzzyChain(nRow);
-        } else if (tNorm == 'm') {
-            m_chain = new MinFloatFuzzyChain(nRow);
-        } else if (tNorm == 'p') {
-            m_chain = new ProductFloatFuzzyChain(nRow);
-        } else
-            //TODO don't throw exception in ctor
-            throw std::runtime_error("Unknown t-norm");
-    }
+    { m_chain = new lfl::Chain(nRow); }
 
     ~Attribute()
     { delete m_chain; }
@@ -66,7 +56,7 @@ public:
     size_t getId() const
     { return m_id; }
 
-    AbstractFuzzyChain* getChain()
+    lfl::Chain* getChain()
     { return m_chain; }
 
     int getVariable() const
@@ -76,11 +66,12 @@ public:
     { return m_support; }
 
     void initialize() {
-        m_support = m_chain->sum() / m_chain->size();
+        m_support = m_chain->mean();
     }
 };
 
 
 typedef std::vector<Attribute *> AttributeVector;
 
+}}
 #endif

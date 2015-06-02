@@ -90,7 +90,7 @@ train <- wineind[-1 * (length(wineind)-horizon+1):length(wineind)]
 test <- wineind[(length(wineind)-horizon+1):length(wineind)]
 
 # compute forecast
-f <- frbe(as.ts(train), h=horizon)
+f <- frbe(ts(train, frequency=frequency(wineind)), h=horizon)
 
 # display the forecast
 f$mean

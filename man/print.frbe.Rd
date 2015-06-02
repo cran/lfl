@@ -23,9 +23,10 @@
 \value{
     None.
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\references{
+    Štěpnička, M., Burda, M., Štěpničková, L. Fuzzy Rule Base Ensemble Generated from Data
+    by Linguistic Associations Mining. FUZZY SET SYST. 2015.
+}
 \author{
     Michal Burda
 }
@@ -44,7 +45,7 @@
   horizon <- 10
   train <- wineind[-1 * (length(wineind)-horizon+1):length(wineind)]
   test <- wineind[(length(wineind)-horizon+1):length(wineind)]
-  f <- frbe(as.ts(train), h=horizon)
+  f <- frbe(ts(train, frequency=frequency(wineind)), h=horizon)
   print(f)
   print(test)
 }

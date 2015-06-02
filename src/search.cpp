@@ -1,11 +1,11 @@
 /*
- * File name: farules.cpp
+ * File name: search.cpp
  * Date:      2013/08/21 10:49
- * Author:
+ * Author:    Michal Burda
  */
 
 
-#include "farules.h"
+#include "search.h"
 #include "search/Search.h"
 #include "search/BasicExtension.h"
 #include "search/TrieExtension.h"
@@ -15,8 +15,10 @@
 
 using namespace Rcpp;
 using namespace std;
+using namespace lfl::search;
 
-RcppExport SEXP farules(SEXP aData, SEXP aConfig) {
+
+RcppExport SEXP search(SEXP aData, SEXP aConfig) {
     List result;
     try {
         NumericMatrix rcppData(aData);

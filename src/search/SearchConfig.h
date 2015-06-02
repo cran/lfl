@@ -3,15 +3,18 @@
  * Date:      2014/02/04 09:17
  */
 
-#ifndef __SEARCHCONFIG_H__
-#define __SEARCHCONFIG_H__
+#ifndef __LFL__SEARCH__SEARCHCONFIG_H__
+#define __LFL__SEARCH__SEARCHCONFIG_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 
 #include <stdlib.h>
 #include <iostream>
+#include "../common/ChainCombiner.h"
+
+
+namespace lfl { namespace search {
 
 
 /**
@@ -36,6 +39,8 @@ private:
      * 'p' = product, 'l' = Lukasiewicz, 'm' = minimum
      */
     char m_tNorm;
+
+    lfl::ChainCombiner* m_conjunction;
     
     /**
      * Characteristic of which to find best rules:
@@ -102,6 +107,7 @@ public:
         m_nrow(0),
         m_ncol(0),
         m_tNorm('m'),
+        m_conjunction(NULL),
         m_bestBy('c'),
         m_ruleNumber(20),
         m_minSupport(0.05),
@@ -111,6 +117,11 @@ public:
         m_recursionThreshold(4)
     { }
 
+    virtual ~SearchConfig() {
+        if (m_conjunction) {
+            delete m_conjunction;
+        }
+    }
 
     unsigned int getNumThreads() const
     { return m_threads; }
@@ -126,6 +137,9 @@ public:
     char getTNorm() const
     { return m_tNorm; }
 
+
+    lfl::ChainCombiner* getConjunction() const
+    { return m_conjunction; }
 
     char getBestBy() const
     { return m_bestBy; }
@@ -180,8 +194,13 @@ public:
     { m_ncol = colCount; }
 
 
-    void setTNorm(char tNorm)
-    { m_tNorm = tNorm; }
+    void setTNorm(char tNorm) { 
+        m_tNorm = tNorm;
+        if (m_conjunction) {
+            delete m_conjunction;
+        }
+        m_conjunction = createConjunctionCombiner(tNorm);
+    }
 
 
     void setBestBy(char bestBy)
@@ -246,4 +265,5 @@ public:
     }
 };
 
+}}
 #endif

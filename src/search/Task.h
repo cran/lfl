@@ -3,16 +3,18 @@
  * Date:      2014/02/04 08:32
  */
 
-#ifndef __TASK_H__
-#define __TASK_H__
+#ifndef __LFL__SEARCH__TASK_H__
+#define __LFL__SEARCH__TASK_H__
 
 #include <sstream>
 
 #include <common.h>
-#include "typedefs.h"
 #include "Attribute.h"
 #include "Statistics.h"
-#include "AbstractFuzzyChain.h"
+#include "../common/Chain.h"
+
+
+namespace lfl { namespace search {
 
 
 class Task {
@@ -76,9 +78,9 @@ private:
      */
     unsigned long m_postpone;
 
-    AbstractFuzzyChain* m_lhsChain;
-    AbstractFuzzyChain* m_rhsChain;
-    AbstractFuzzyChain* m_parentLhsChain;
+    lfl::Chain* m_lhsChain;
+    lfl::Chain* m_rhsChain;
+    lfl::Chain* m_parentLhsChain;
 
 
 public:
@@ -155,15 +157,15 @@ public:
     { return m_stats; }
 
 
-    AbstractFuzzyChain* getLhsChain()
+    lfl::Chain* getLhsChain()
     { return m_lhsChain; }
 
 
-    AbstractFuzzyChain* getRhsChain()
+    lfl::Chain* getRhsChain()
     { return m_rhsChain; }
 
 
-    AbstractFuzzyChain* getParentLhsChain()
+    lfl::Chain* getParentLhsChain()
     { return m_parentLhsChain; }
 
 
@@ -190,21 +192,21 @@ public:
     }
 
 
-    void setLhsChain(AbstractFuzzyChain* chain) {
+    void setLhsChain(lfl::Chain* chain) {
         if (m_lhsChain)
             delete m_lhsChain;
         m_lhsChain = chain;
     }
 
 
-    void setRhsChain(AbstractFuzzyChain* chain) {
+    void setRhsChain(lfl::Chain* chain) {
         if (m_rhsChain)
             delete m_rhsChain;
         m_rhsChain = chain;
     }
 
 
-    void setParentLhsChain(AbstractFuzzyChain* chain) {
+    void setParentLhsChain(lfl::Chain* chain) {
         if (m_parentLhsChain)
             delete m_parentLhsChain;
         m_parentLhsChain = chain;
@@ -304,7 +306,7 @@ public:
 
 
     friend std::ostream& operator<< (std::ostream& stream, const Task& obj) {
-        stream << "lhs: " << obj.getCurrentLhs() << " & " << obj.m_lhsPrefix;
+        //stream << "lhs: " << obj.getCurrentLhs() << " & " << obj.m_lhsPrefix;
         //stream << "prefix: " << obj.m_lhsPrefix;
         //stream << ", availLhs size: " << obj.m_availableLhs.size() << " (curr index: " << obj.m_currentLhsIndex << ") ";
         //stream << ", soFarLhs size: " << obj.m_soFarLhs.size();
@@ -323,6 +325,5 @@ public:
 };
 
 
-
-
+}}
 #endif

@@ -3,15 +3,17 @@
  * Date:      2014/02/04 13:07
  */
 
-#ifndef __ABSTRACTEXTENSION_H__
-#define __ABSTRACTEXTENSION_H__
+#ifndef __LFL__SEARCH__ABSTRACTEXTENSION_H__
+#define __LFL__SEARCH__ABSTRACTEXTENSION_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 #include "Task.h"
 #include "SearchConfig.h"
 #include "Data.h"
+
+
+namespace lfl { namespace search {
 
 
 class AbstractExtension {
@@ -206,4 +208,5 @@ public:
     }
 };
 
+}}
 #endif

@@ -4,7 +4,7 @@ importFrom("Rcpp", sourceCpp)
 importFrom("e1071", kurtosis, skewness)
 importFrom("foreach", foreach, "%do%", "%dopar%")
 importFrom("forecast", forecast, auto.arima, ets, rwf, thetaf)
-importFrom("plyr", colwise)
+importFrom("plyr", colwise, llply)
 importFrom("tseries", adf.test)
 importFrom("zoo", rollapply)
 importFrom("utils", head, tail)
@@ -32,6 +32,8 @@ S3method("print", "fsets")
 S3method("print", "farules")
 S3method("print", "frbe")
 
+S3method("plot", "fsets")
+
 S3method("head", "fsets")
 S3method("head", "farules")
 
@@ -42,3 +44,5 @@ S3method("sel", "fsets")
 S3method("sel", "farules")
 
 S3method("as.matrix", "fsets")
+
+S3method("as.data.frame", "farules")

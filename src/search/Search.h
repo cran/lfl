@@ -5,16 +5,15 @@
  */
 
 
-#ifndef __SEARCH_H__
-#define __SEARCH_H__
+#ifndef __LFL__SEARCH__SEARCH_H__
+#define __LFL__SEARCH__SEARCH_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 #include "SearchConfig.h"
 #include "Data.h"
 #include "Attribute.h"
-#include "AbstractFuzzyChain.h"
+#include "../common/Chain.h"
 #include "Task.h"
 #include "TaskQueue.h"
 #include "AbstractExtension.h"
@@ -24,12 +23,15 @@
 #endif
 
 
+namespace lfl { namespace search {
+
+
 class Search {
 protected:
     /**
      * Configuration of the search algorithm
      */
-    SearchConfig m_config;
+    SearchConfig& m_config;
 
     /**
      * Data stored in the form of fuzzy chains
@@ -235,9 +237,9 @@ protected:
         if (task->hasLhs()) {
             // non-empty LHS
             Attribute *attr = m_data.getAttribute(task->getCurrentLhs());
-            AbstractFuzzyChain* newChain = attr->getChain()->copy();
+            lfl::Chain* newChain = attr->getChain()->copy();
             if (task->getParentLhsChain() != NULL) {
-                newChain->conjunctWith(task->getParentLhsChain());
+                newChain->combineWith(task->getParentLhsChain(), m_config.getConjunction());
             }
             task->setLhsChain(newChain);
         }
@@ -253,9 +255,9 @@ protected:
      */
     void updateRhsChain(Task* task) {
         Attribute *attr = m_data.getAttribute(task->getCurrentRhs());
-        AbstractFuzzyChain* newChain = attr->getChain()->copy();
+        lfl::Chain* newChain = attr->getChain()->copy();
         if (task->getLhsChain() != NULL) {
-            newChain->conjunctWith(task->getLhsChain());
+            newChain->combineWith(task->getLhsChain(), m_config.getConjunction());
         }
         task->setRhsChain(newChain);
     }
@@ -264,8 +266,7 @@ protected:
 public:
     Search(SearchConfig& config, AbstractExtension* extension) :
         m_config(config),
-        m_data(config.getRowCount(), config.getColCount(),
-                config.getTNorm(), config.getVariables()),
+        m_data(config.getRowCount(), config.getColCount(), config.getVariables()),
         m_extension(extension),
         m_working(0)
     {
@@ -310,4 +311,5 @@ public:
     }
 };
 
+}}
 #endif

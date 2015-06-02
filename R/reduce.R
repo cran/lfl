@@ -1,4 +1,9 @@
-reduce <- function(x, rules, ratio, parallel=FALSE) {
+reduce <- function(x,
+                    rules,
+                    ratio,
+                    tnorm=c("minimum", "product", "lukasiewicz"),
+                    tconorm=c("maximum", "product", "lukasiewicz"),
+                    numThreads=1) {
     if (is.vector(x)) {
         x <- matrix(x, nrow=1, dimnames=list(NULL, names(x)))
     }
@@ -19,48 +24,37 @@ reduce <- function(x, rules, ratio, parallel=FALSE) {
         stop("'rules' must be a list of rules")
     }
 
-    tnorm <- minnorm
-    allConseq <- consequents(rules)
-    uniqConseq <- unique(allConseq)
-
-    fired <- fire(x, rules, tnorm, onlyAnte=TRUE, parallel=parallel)
-
-    innerLoop <- function(conseq) {
-        subIndices <- (1:length(rules))[conseq == allConseq]
-        origCoverage <- mean(do.call('pmax', fired[subIndices]))
-        reducedRules <- NULL
-        reducedCoverage <- 0
-        prefixEval <- rep(0, nrow(x))
-
-        # create rulebase iteratively by selecting rules that bestly improve coverage
-        while (reducedCoverage < origCoverage * ratio) { 
-            # get coverages of rulebases that are created by adding each rule to the existing rulebase
-            ruleCoverages <- sapply(fired[subIndices], function(f) mean(pmax(f, prefixEval)))
-
-            # get rule index that best improves the coverage of the whole rulebase
-            maxCoverageIndex <- subIndices[which.max(ruleCoverages)]
-
-            reducedRules <- c(reducedRules, maxCoverageIndex)
-            prefixEval <- pmax(prefixEval, fired[[maxCoverageIndex]])
-            reducedCoverage <- mean(prefixEval)
-        }
-        return(reducedRules)
+    if (!is.numeric(numThreads) || length(numThreads) > 1 || numThreads < 1) {
+        stop("'numThreads' must be positive integer number")
     }
 
-    conseq <- NULL
-    if (parallel) {
-        result <- foreach (conseq=uniqConseq, .combine=c) %dopar% { innerLoop(conseq) }
+    tnorm <- match.arg(tnorm)
+    tconorm <- match.arg(tconorm)
+
+    lhsSupport <- NA
+    if (is.farules(origRules) && ('lhsSupport' %in% colnames(origRules$statistics))) {
+        lhsSupport <- origRules$statistics[, 'lhsSupport']
     } else {
-        result <- foreach (conseq=uniqConseq, .combine=c) %do% { innerLoop(conseq) }
+        lhsSupport <- rep(1, length(rules))
     }
 
-    result <- unlist(result)
-    result <- sort(result)
+    lvl <- colnames(x)
+    rb <- lapply(rules, function(x) { as.integer(factor(x, levels=lvl)) - 1 })
+    config <- list(data=x,
+                   rules=rb,
+                   lhsSupport=lhsSupport,
+                   ratio=ratio,
+                   tnorm=tnorm,
+                   tconorm=tconorm,
+                   numThreads=numThreads)
+    result <- .Call("reduce", config, PACKAGE="lfl")
+    result <- result + 1
+
     if (is.farules(origRules)) {
         r <- origRules$rules[result]
         s <- origRules$statistics[result, , drop=FALSE]
         return(farules(rules=r, statistics=s))
     } else {
-        return(result)
+        return(rules[result])
     }
 }

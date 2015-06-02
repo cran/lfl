@@ -4,12 +4,15 @@
  * Author:    
  */
 
-#ifndef __ABSTRACTSTORAGE_H__
-#define __ABSTRACTSTORAGE_H__
+#ifndef __LFL__SEARCH__ABSTRACTSTORAGE_H__
+#define __LFL__SEARCH__ABSTRACTSTORAGE_H__
 
 
 #include <common.h>
 #include "Rule.h"
+
+
+namespace lfl { namespace search {
 
 
 /**
@@ -29,4 +32,5 @@ public:
     virtual void print() = 0;
 };
 
+}}
 #endif

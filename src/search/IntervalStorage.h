@@ -1,11 +1,11 @@
-    /*
-    * File name: IntervalStorage.h
+/*
+ * File name: IntervalStorage.h
  * Date:      2013/09/11 06:53
  * Author:    Michal Burda
  */
 
-#ifndef __INTERVALSTORAGE_H__
-#define __INTERVALSTORAGE_H__
+#ifndef __LFL__SEARCH__INTERVALSTORAGE_H__
+#define __LFL__SEARCH__INTERVALSTORAGE_H__
 
 
 #include <common.h>
@@ -13,6 +13,9 @@
 #include "AbstractStorage.h"
 
 #include <queue>
+
+
+namespace lfl { namespace search {
 
 
 class IntervalStorage : public AbstractStorage {
@@ -130,4 +133,5 @@ public:
     }
 };
 
+}}
 #endif

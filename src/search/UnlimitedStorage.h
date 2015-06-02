@@ -4,13 +4,16 @@
  * Author:    Michal Burda
  */
 
-#ifndef __UNLIMITEDSTORAGE_H__
-#define __UNLIMITEDSTORAGE_H__
+#ifndef __LFL__SEARCH__UNLIMITEDSTORAGE_H__
+#define __LFL__SEARCH__UNLIMITEDSTORAGE_H__
 
 
 #include <common.h>
 #include "AbstractStorage.h"
 #include "RuleQueue.h"
+
+
+namespace lfl { namespace search {
 
 
 class UnlimitedStorage : public AbstractStorage {
@@ -76,4 +79,5 @@ public:
     }
 };
 
+}}
 #endif

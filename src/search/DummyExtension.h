@@ -3,14 +3,16 @@
  * Date:      2014/02/04 13:07
  */
 
-#ifndef __DUMMYEXTENSION_H__
-#define __DUMMYEXTENSION_H__
+#ifndef __LFL__SEARCH__DUMMYEXTENSION_H__
+#define __LFL__SEARCH__DUMMYEXTENSION_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 #include "Task.h"
 #include "SearchConfig.h"
+
+
+namespace lfl { namespace search {
 
 
 class DummyExtension : public AbstractExtension {
@@ -100,4 +102,5 @@ public:
     { return true; }
 };
 
+}}
 #endif

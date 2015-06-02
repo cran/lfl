@@ -1,6 +1,6 @@
 .computeLength <- function(d) {
   res <- length(d)
-  return(ifelse(res < 100, res / 100, 1))
+  return(res)
 }
 
 
@@ -35,20 +35,20 @@
 .computeSkewness <- function(d) {
   # TODO: mozna by stalo za to  to transformovat nejak nelinearne
   s <- abs(skewness(d, type=1))
-  return(ifelse(s < 3, (s + 3) / 6, 1))
+  return(s)
 }
 
 
 .computeKurtosis <- function(d) {
   # TODO: asi urcite by stalo za to  to transformovat nejak nelinearne
   k <- 3 + kurtosis(d, type=1)
-  return(ifelse(k < 10, k / 10, 1))
+  return(k)
 }
 
 
 .computeVarcoef <- function(d) {
   # TODO: uprava i pro zaporna data (tj. data s nulovym prumerem)
-  return(min(1, sd(d) / mean(d)))
+  return(sd(d) / mean(d))
 }
 
 
@@ -101,14 +101,14 @@ frbe <- function(d, h=10) {
                                   varcoef=.computeVarcoef(d),
                                   stationarity=.computeStationarity(d),
                                   frequency=.computeFrequency(d))
-    f <- lcut5(result$features, context=.frbemodel$featuresContext)
+    f <- lcut3(result$features, context=.frbemodel$featuresContext)
 
     result$weights <- sapply(names(.frbemodel$model),
                              function(n) {
                                  ctx <- .frbemodel$weightContext[[n]]
                                  vals <- slices(ctx[1], ctx[3], 1000)
-                                 parts <- lcut5(vals, name='weight', context=ctx)
-                                 pbld(f, .frbemodel$model[[n]], parts, vals, type='local')
+                                 parts <- lcut3(vals, name='weight', context=ctx)
+                                 pbld(f, .frbemodel$model[[n]], parts, vals, type='global')
                              })
     result$weights <- result$weights[colnames(result$forecasts)]
 

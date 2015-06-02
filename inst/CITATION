@@ -1,0 +1,7 @@
+bibentry(bibtype = "inproceedings",
+         title = "Linguistic Fuzzy Logic in {R}",
+         author = c(person("Michal", "Burda")),
+         year = 2015,
+         booktitle = "Proc. {IEEE} International Conference On Fuzzy Systems",
+         address = "Istanbul")
+

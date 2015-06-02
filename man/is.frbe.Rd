@@ -20,9 +20,10 @@ is.frbe(x)
 \value{
     TRUE if \code{x} is a valid \code{frbe} object and FALSE otherwise.
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\references{
+    Štěpnička, M., Burda, M., Štěpničková, L. Fuzzy Rule Base Ensemble Generated from Data
+    by Linguistic Associations Mining. FUZZY SET SYST. 2015.
+}
 \author{
     Michal Burda
 }

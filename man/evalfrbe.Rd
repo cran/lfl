@@ -37,9 +37,10 @@ evalfrbe(fit,
     column "avg" is added with error of simple average of the individual forecasting methods and a
     column "frbe" with error of the FRBE forecasts.
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\references{
+    Štěpnička, M., Burda, M., Štěpničková, L. Fuzzy Rule Base Ensemble Generated from Data
+    by Linguistic Associations Mining. FUZZY SET SYST. 2015.
+}
 \author{
   Michal Burda
 }
@@ -61,7 +62,7 @@ evalfrbe(fit,
   horizon <- 10
   train <- wineind[-1 * (length(wineind)-horizon+1):length(wineind)]
   test <- wineind[(length(wineind)-horizon+1):length(wineind)]
-  f <- frbe(as.ts(train), h=horizon)
+  f <- frbe(ts(train, frequency=frequency(wineind)), h=horizon)
   evalfrbe(f, test)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

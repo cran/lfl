@@ -5,8 +5,8 @@
  */
 
 
-#ifndef __farules_STATISTICS_H__
-#define __farules_STATISTICS_H__
+#ifndef __LFL__SEARCH__STATISTICS_H__
+#define __LFL__SEARCH__STATISTICS_H__
 
 
 #include <common.h>
@@ -19,6 +19,9 @@
 #define INDEX_LO_LIFT     5
 #define INDEX_HI_LIFT     6
 #define INDEX_END         7
+
+
+namespace lfl { namespace search {
 
 
 class Statistics {
@@ -61,4 +64,5 @@ public:
     }
 };
 
+}}
 #endif

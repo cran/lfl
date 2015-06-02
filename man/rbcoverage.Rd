@@ -46,8 +46,13 @@ rbcoverage(x,
 \value{
     A numeric value of the rule base coverage of given data.
 }
-%\references{
-%}
+\references{
+    M. Burda, M. Štěpnička, Reduction of Fuzzy Rule Bases Driven by the Coverage of Training Data,
+    in: Proc. 16th World Congress of the International Fuzzy Systems
+    Association and 9th Conference of the European Society for Fuzzy
+    Logic and Technology (IFSA-EUSFLAT 2015), Advances in Intelligent
+    Systems Research, Atlantic Press, Gijon, 2015.
+}
 \author{
     Michal Burda
 }

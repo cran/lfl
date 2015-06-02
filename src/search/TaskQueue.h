@@ -3,14 +3,17 @@
  * Date:      2014/02/04 08:49
  */
 
-#ifndef __TASKQUEUE_H__
-#define __TASKQUEUE_H__
+#ifndef __LFL__SEARCH__TASKQUEUE_H__
+#define __LFL__SEARCH__TASKQUEUE_H__
 
 
 #include <common.h>
 #include "Task.h"
 
 #include <queue>
+
+
+namespace lfl { namespace search {
 
 
 class TaskComparison {
@@ -48,5 +51,5 @@ public:
     }
 };
 
-
+}}
 #endif

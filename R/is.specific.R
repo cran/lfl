@@ -1,3 +1,15 @@
+.is.specific <- function(x, y, vars, specs) {
+    lvl <- names(vars)
+
+    config <- list(x=as.integer(factor(x, levels=lvl)) - 1,
+                   y=as.integer(factor(y, levels=lvl)) - 1,
+                   vars=as.numeric(as.factor(vars[lvl])),
+                   specs=specs[lvl, lvl])
+    result <- .Call("isSpecific", config, PACKAGE="lfl")
+    return(result)
+}
+
+
 # Determines whether 'x' is more specific (or equal!!!) than 'y' with respect to 'vars' and 'specs'.
 is.specific <- function(x, y, vars, specs) {
     if (!is.null(x) && (!is.vector(x) || !is.character(x))) {
@@ -24,14 +36,5 @@ is.specific <- function(x, y, vars, specs) {
         stop('Unable to work with rules containing the same var more times')
     }
 
-    if (length(setdiff(yVars, xVars)) > 0) {
-        return(FALSE);
-    }
-    intrVars <- intersect(xVars, yVars)
-    res <- sapply(intrVars, function(v) {
-        xCond <- x[which(xVars == v)]
-        yCond <- y[which(yVars == v)]
-        return(specs[xCond, yCond] || (xCond == yCond))
-    })
-    return(all(res))
+    return(.is.specific(x, y, vars, specs))
 }

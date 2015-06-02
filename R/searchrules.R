@@ -80,7 +80,7 @@ searchrules <- function(d,
 
     #str(config)
 
-    result <- .Call("farules", d, config, PACKAGE="lfl")
+    result <- .Call("search", d, config, PACKAGE="lfl")
 
     map <- colnames(d)
     names(map) <- 1:ncol(d)

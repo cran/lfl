@@ -3,17 +3,19 @@
  * Date:      2014/02/04 13:31
  */
 
-#ifndef __BASICEXTENSION_H__
-#define __BASICEXTENSION_H__
+#ifndef __LFL__SEARCH__BASICEXTENSION_H__
+#define __LFL__SEARCH__BASICEXTENSION_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 #include "AbstractExtension.h"
 #include "AbstractStorage.h"
 #include "UnlimitedStorage.h"
 #include "BoundedStorage.h"
 #include "IntervalStorage.h"
+
+
+namespace lfl { namespace search {
 
 
 class BasicExtension : public AbstractExtension {
@@ -254,4 +256,5 @@ public:
     { return m_storage; }
 };
 
+}}
 #endif

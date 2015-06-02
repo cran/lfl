@@ -60,8 +60,11 @@ pbld(x,
     number of rows of the \code{x} argument.
 }
 \references{
-    V. Novak, A comprehensive theory of trichotomous evaluative linguistic expressions, Fuzzy Sets
-    and Systems 159 (22) (2008) 2939--2969.
+    A. Dvořák, M. Štěpnička, On perception-based logical deduction and its
+    variants, in: Proc. 16th World Congress of the International Fuzzy Systems
+    Association and 9th Conference of the European Society for Fuzzy
+    Logic and Technology (IFSA-EUSFLAT 2015), Advances in Intelligent
+    Systems Research, Atlantic Press, Gijon, 2015.
 }
 \author{
     Michal Burda

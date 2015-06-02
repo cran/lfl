@@ -4,14 +4,15 @@
  * Author:    
  */
 
-#ifndef __COMBINATIONTRIE_H__
-#define __COMBINATIONTRIE_H__
+#ifndef __LFL__SEARCH__COMBINATIONTRIE_H__
+#define __LFL__SEARCH__COMBINATIONTRIE_H__
 
 
 #include <common.h>
 #include <vector>
 
-#include "typedefs.h"
+
+namespace lfl { namespace search {
 
 
 template <typename T> class Node {
@@ -126,4 +127,5 @@ public:
     }
 };
 
+}}
 #endif

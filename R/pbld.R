@@ -37,8 +37,11 @@ pbld <- function(x,
     if (nrow(partition) != length(values)) {
         stop("The length of 'values' must be equal to the number of rows of 'partition'")
     }
-    if (length(setdiff(unique(unlist(antecedents(rules))), colnames(x))) > 0) {
-        stop("'rules' contains predicates in antecedent-part that are not present in 'colnames(x)'")
+
+    diffAttr <- setdiff(unique(unlist(antecedents(rules))), colnames(x))
+    if (length(diffAttr) > 0) {
+        stop(paste0("'rules' contains predicates in antecedent-part that are not present in 'colnames(x)': ",
+                    paste(diffAttr, collapse=', ', sep='')))
     }
 
     type <- match.arg(type)
@@ -58,7 +61,6 @@ pbld <- function(x,
             if (length(selected) <= 0) {
                 return(.defuzzEmptyRulebase(values))
             }
-            #conseq <- sapply(selected, function(rule) rule[1]) # get consequents
             conseq <- unlist(consequents(selected))
             degrees <- aggregate(conseq, rep(maxFired, length(conseq)), partition)
             res <- defuzz(degrees, values, type='dee')

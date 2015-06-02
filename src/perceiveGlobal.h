@@ -1,5 +1,5 @@
-#ifndef __farules_FARULES_H__
-#define __farules_FARULES_H__
+#ifndef __LFL__PERCEIVEGLOBAL_H__
+#define __LFL__PERCEIVEGLOBAL_H__
 
 #include <common.h>
 #include "Rcpp.h"
@@ -16,6 +16,6 @@
  * on Rcpp-devel for a misuse of RcppExport
  */
 
-RcppExport SEXP farules(SEXP aData, SEXP aConfig);
+RcppExport SEXP perceiveGlobal(SEXP aConfig);
 
 #endif

@@ -1,18 +1,20 @@
 /*
  * File name: Rule.h
  * Date:      2013/09/11 08:12
- * Author:
+ * Author:    Michal Burda
  */
 
-#ifndef __RULE_H__
-#define __RULE_H__
+#ifndef __LFL__SEARCH__RULE_H__
+#define __LFL__SEARCH__RULE_H__
 
 #include <common.h>
-#include "typedefs.h"
 #include "Attribute.h"
 #include "Statistics.h"
 
 #include <set>
+
+
+namespace lfl { namespace search {
 
 
 class Rule {
@@ -94,16 +96,17 @@ public:
 */
 
     friend std::ostream& operator<< (std::ostream& stream, const Rule& obj) {
-        stream << obj.m_lhs << " => " << obj.m_rhs << " (" << obj.m_stats << ")";
+        //stream << obj.m_lhs << " => " << obj.m_rhs << " (" << obj.m_stats << ")";
 
         return stream;
     }
 
 
     friend std::ostream& operator<< (std::ostream& stream, const Rule* obj) {
-        stream << *obj;
+        //stream << *obj;
         return stream;
     }
 };
 
+}}
 #endif

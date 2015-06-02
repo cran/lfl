@@ -1,22 +1,20 @@
 /*
  * File name: LiftExtension.h
  * Date:      2014/03/18 13:20
- * Author:    
+ * Author:    Michal Burda
  */
 
-#ifndef __LIFTEXTENSION_H__
-#define __LIFTEXTENSION_H__
+#ifndef __LFL__SEARCH__LIFTEXTENSION_H__
+#define __LFL__SEARCH__LIFTEXTENSION_H__
 
 
 #include <algorithm>
 
 #include <common.h>
-#include "typedefs.h"
 #include "AbstractExtension.h"
 
 
-
-
+namespace lfl { namespace search {
 
 
 class LiftExtension : public AbstractExtension {
@@ -153,5 +151,5 @@ public:
 
 };
 
-
+}}
 #endif

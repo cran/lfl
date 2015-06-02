@@ -1,35 +1,18 @@
 .isspec <- function(r1, r2, vars, specs) {
     if (r1[1] == r2[1]) {
-        return(is.specific(r1[-1], r2[-1], vars, specs))
+        return(.is.specific(r1[-1], r2[-1], vars, specs))
     }
     return(FALSE)
 }
 
 
 .perceiveGlobal <- function(rules, vars, specs) {
-    len <- length(rules)
-    if (len <= 1) {
-        return(rules)
-    }
-
-    res <- rep(TRUE, len)
-    for (i in 1:(len-1)) {
-        if (res[i]) {
-            ri <- rules[[i]]
-            for (j in (i+1):len) {
-                if (res[j]) {
-                    rj <- rules[[j]]
-                    if (.isspec(ri, rj, vars, specs)) {
-                        res[j] <- FALSE
-                    } else if (.isspec(rj, ri, vars, specs)) {
-                        res[i] <- FALSE
-                        break
-                    }
-                }
-            }
-        }
-    }
-    return(rules[res])
+    lvl <- names(vars)
+    config <- list(rules=lapply(rules, function(x) { as.integer(factor(x, levels=lvl)) - 1 }),
+                   vars=as.numeric(as.factor(vars[lvl])),
+                   specs=specs[lvl, lvl])
+    result <- .Call("perceiveGlobal", config, PACKAGE="lfl")
+    return(rules[result])
 }
 
 

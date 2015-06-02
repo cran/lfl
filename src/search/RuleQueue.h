@@ -4,14 +4,17 @@
  * Author:    Michal Burda
  */
 
-#ifndef __RULEQUEUE_H__
-#define __RULEQUEUE_H__
+#ifndef __LFL__SEARCH__RULEQUEUE_H__
+#define __LFL__SEARCH__RULEQUEUE_H__
 
 
 #include <common.h>
 #include "Rule.h"
 
 #include <queue>
+
+
+namespace lfl { namespace search {
 
 
 class RuleComparison {
@@ -44,4 +47,5 @@ public:
     { }
 };
 
+}}
 #endif

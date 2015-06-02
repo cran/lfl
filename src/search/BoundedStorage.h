@@ -4,12 +4,15 @@
  * Author:    Michal Burda
  */
 
-#ifndef __BOUNDEDSTORAGE_H__
-#define __BOUNDEDSTORAGE_H__
+#ifndef __LFL__SEARCH__BOUNDEDSTORAGE_H__
+#define __LFL__SEARCH__BOUNDEDSTORAGE_H__
 
 
 #include <common.h>
 #include "UnlimitedStorage.h"
+
+
+namespace lfl { namespace search {
 
 
 class BoundedStorage : public UnlimitedStorage {
@@ -46,4 +49,6 @@ public:
     }
 };
 
+
+}}
 #endif

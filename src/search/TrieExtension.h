@@ -4,14 +4,16 @@
  * Author:    
  */
 
-#ifndef __TRIEEXTENSION_H__
-#define __TRIEEXTENSION_H__
+#ifndef __LFL__SEARCH__TRIEEXTENSION_H__
+#define __LFL__SEARCH__TRIEEXTENSION_H__
 
 
 #include <common.h>
-#include "typedefs.h"
 #include "AbstractExtension.h"
 #include "CombinationTrie.h"
+
+
+namespace lfl { namespace search {
 
 
 class TrieExtension : public AbstractExtension {
@@ -134,4 +136,5 @@ public:
     }
 };
 
+}}
 #endif
