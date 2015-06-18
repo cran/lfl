@@ -38,20 +38,20 @@ RcppExport SEXP reduce(SEXP aConfig) {
 
         Reduce* reduce = new Reduce(reduceConfig);
 
-        for (int row = 0; row < rcppData.nrow(); row++) {
-            for (int col = 0; col < rcppData.ncol(); col++) {
+        for (R_len_t row = 0; row < rcppData.nrow(); row++) {
+            for (R_len_t col = 0; col < rcppData.ncol(); col++) {
                 reduce->getData().setValue(row, col, rcppData(row, col));
             }
         }
 
-        for (IdType id = 0; id < rcppRules.size(); id++) {
+        for (R_len_t id = 0; id < rcppRules.size(); id++) {
             NumericVector rcppRule(rcppRules[id]);
             Rule* rule = reduce->createRule(id);
             rule->setPotential(rcppLhsSupport[id], 0L);
             rule->setConsequent(rcppRule[0]);
 
             IdSet& ante = rule->getAntecedent();
-            for (int i = 1; i < rcppRule.length(); i++) {
+            for (R_len_t i = 1; i < rcppRule.length(); i++) {
                 ante.insert(rcppRule[i]);
             }
 

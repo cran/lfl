@@ -15,10 +15,6 @@
 #include "ReduceConfig.h"
 #include "RuleQueue.h"
 
-#ifdef SUPPORT_OPENMP
-#include <omp.h>
-#endif
-
 
 namespace lfl { namespace reduce {
 
@@ -96,7 +92,10 @@ protected:
 
 
     void reduceSubBases() {
-        #pragma omp parallel default(shared)
+#ifdef _OPENMP
+        int nthreads = m_config.getNumThreads();
+        #pragma omp parallel num_threads(nthreads) default(shared)
+#endif
         for (ConsequentMap::iterator cit=m_consequentMap.begin(); cit != m_consequentMap.end(); cit++) {
             #pragma omp single nowait
             {
@@ -175,11 +174,7 @@ public:
         m_config(config),
         m_data(config.getRowCount(), config.getColCount()),
         count(0)
-    {
-#ifdef SUPPORT_OPENMP
-        omp_set_num_threads(m_config.getNumThreads());
-#endif
-    }
+    { }
 
 
     virtual ~Reduce() {

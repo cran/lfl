@@ -47,7 +47,6 @@ test_that('perceive', {
     expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
                              c('Bi.d', 'VeSm.a', 'Bi.c'),
                              c('Sm.d', 'Sm.b', 'Sm.c')),
-                 list(c('Sm.d', 'Sm.a', 'Bi.c'),
-                      c('Bi.d', 'VeSm.a', 'Bi.c'),
+                 list(c('Bi.d', 'VeSm.a', 'Bi.c'),
                       c('Sm.d', 'Sm.b', 'Sm.c')))
 })

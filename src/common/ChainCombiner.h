@@ -18,6 +18,7 @@ namespace lfl {
 class ChainCombiner {
     public:
     virtual float combine(float x, float y) = 0;
+    virtual ~ChainCombiner() { }
 };
 
 

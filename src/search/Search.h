@@ -18,10 +18,6 @@
 #include "TaskQueue.h"
 #include "AbstractExtension.h"
 
-#ifdef SUPPORT_OPENMP
-#include <omp.h>
-#endif
-
 
 namespace lfl { namespace search {
 
@@ -269,11 +265,7 @@ public:
         m_data(config.getRowCount(), config.getColCount(), config.getVariables()),
         m_extension(extension),
         m_working(0)
-    {
-#ifdef SUPPORT_OPENMP
-        omp_set_num_threads(m_config.getNumThreads());
-#endif
-    }
+    { }
 
 
     virtual ~Search()
@@ -297,14 +289,14 @@ public:
 
 
     virtual void runLoop() {
-        //static int taskIndex = 0;
-         //#pragma omp parallel num_threads(1) default(shared)
-        #pragma omp parallel default(shared)
+#ifdef _OPENMP
+        int nthreads = m_config.getNumThreads();
+        #pragma omp parallel num_threads(nthreads) default(shared)
+#endif
         while (!workDone()) {
             Task* task = receiveTask();
             if (task) {
                 processTask(task);
-                //std::cout << taskIndex++ << " task processed" << std::endl;
                 taskFinished();
             }
         }

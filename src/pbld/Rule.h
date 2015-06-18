@@ -25,9 +25,11 @@ protected:
 
 
 public:
-    Rule(IdType id) {
-        m_id = id;
-    }
+    Rule(IdType id) :
+        m_id(id),
+        m_consequent(),
+        m_antecedent()
+    { } 
 
 
     IdType getId() {

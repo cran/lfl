@@ -3,13 +3,10 @@ CXX_STD = CXX11
 
 # Preprocessor options
 #     -UNDEBUG = force debug mode
-PKG_CPPFLAGS = -I. \
-    $(SHLIB_OPENMP_CXXFLAGS) \
-    $(CXX1XSTD)
+PKG_CPPFLAGS=-I. @OPENMP_CXXFLAGS@
 
 # Compiler options
 #PKG_CXXFLAGS =
 
 # Linker options
-PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS)
-
+PKG_LIBS=@OPENMP_CXXFLAGS@ @LIBS@
