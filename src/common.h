@@ -18,6 +18,18 @@
 #include <set>
 
 
+#define LFL_BEGIN_TRYCATCH \
+    try {
+
+#define LFL_END_TRYCATCH \
+    } catch(std::exception &ex) {       \
+	forward_exception_to_r(ex);     \
+    } catch(...) {                      \
+	::Rf_error("c++ exception (unknown reason)"); \
+    }                                   \
+    return wrap(NA_REAL);               \
+
+
 #define printVector(x) { \
     for (auto v : x) { \
         std::cout << " " << v; \

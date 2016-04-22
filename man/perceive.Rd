@@ -45,7 +45,7 @@ perceive(rules,
     }
 }
 \details{
-    For each rule \code{x} in the \code{rules} list, the function searches for another rule \code{y}
+    For each rule \code{x} in the \code{rules} list, it searches for another rule \code{y}
     such that \code{is.specific(y, x)} returns TRUE. If yes then \code{x} is removed from the list.
 }
 \value{

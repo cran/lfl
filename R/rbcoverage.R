@@ -1,6 +1,6 @@
 rbcoverage <- function(x,
                        rules,
-                       tnorm=c("minimum", "product", "lukasiewicz"),
+                       tnorm=c("goedel", "goguen", "lukasiewicz"),
                        onlyAnte=TRUE) {
     if (is.vector(x)) {
         x <- matrix(x, nrow=1, dimnames=list(NULL, names(x)))

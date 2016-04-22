@@ -53,7 +53,7 @@ pbld <- function(x,
 
     if (type == 'global') {
         innerLoop <- function(row) {
-            fired <- fire(row, rules, tnorm=minnorm, onlyAnte=TRUE)
+            fired <- fire(row, rules, tnorm=goedel.tnorm, onlyAnte=TRUE)
             fired <- unlist(fired)
             maxFired <- max(fired)
             most <- which(fired == maxFired)
@@ -68,7 +68,7 @@ pbld <- function(x,
         }
     } else {
         innerLoop <- function(row) {
-            fired <- fire(row, rules, tnorm=minnorm, onlyAnte=TRUE)
+            fired <- fire(row, rules, tnorm=goedel.tnorm, onlyAnte=TRUE)
             fired <- unlist(fired)
             most <- which(fired > 0)
             selected <- .perceiveLocal(rules[most], vars(x), specs(x), fired[most])

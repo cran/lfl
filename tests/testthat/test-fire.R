@@ -6,10 +6,10 @@ test_that('fire antecedents on data vector', {
                   c('d', 'a'),
                   c('c', 'a', 'b'))
 
-    res <- fire(x, rules, prodnorm)
+    res <- fire(x, rules, goguen.tnorm)
     expect_equal(res, list(0.15, 1, 0.1, 0.02))
 
-    res <- fire(x, rules, 'product')
+    res <- fire(x, rules, 'goguen')
     expect_equal(res, list(0.15, 1, 0.1, 0.02))
 })
 
@@ -19,7 +19,7 @@ test_that('fire single antecedent on data matrix', {
     colnames(x) <- letters[1:10]
     rules <- c('a', 'c', 'e')
 
-    res <- fire(x, rules, prodnorm)
+    res <- fire(x, rules, goguen.tnorm)
 
     expect_equal(res, list(c(0.1125, 0.15)))
 })
@@ -30,7 +30,7 @@ test_that('fire whole single rule on data matrix', {
     colnames(x) <- letters[1:10]
     rules <- c('a', 'c', 'e')
 
-    res <- fire(x, rules, prodnorm, onlyAnte=FALSE)
+    res <- fire(x, rules, goguen.tnorm, onlyAnte=FALSE)
 
     expect_equal(res, list(c(0.005625, 0.015)))
 })
@@ -44,7 +44,7 @@ test_that('fire antecedents on data matrix', {
                   c('d', 'a'),
                   c('c', 'a', 'b'))
 
-    res <- fire(x, rules, prodnorm)
+    res <- fire(x, rules, goguen.tnorm)
 
     expect_equal(res, list(c(0.1125, 0.15),
                            c(1, 1),
@@ -64,7 +64,7 @@ test_that('fire on farules', {
     class(farules) <- c('farules', 'list')
     expect_true(is.farules(farules))
 
-    res <- fire(x, farules, prodnorm)
+    res <- fire(x, farules, goguen.tnorm)
 
     expect_equal(res, list(c(0.1125, 0.15),
                            c(1, 1),

@@ -6,8 +6,6 @@
 
 
 #include "reduce.h"
-
-#include <common.h>
 #include "reduce/Reduce.h"
 
 

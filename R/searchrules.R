@@ -1,7 +1,7 @@
 searchrules <- function(d,
                         lhs=2:ncol(d),
                         rhs=1,
-                        tnorm=c("minimum", "product", "lukasiewicz"),
+                        tnorm=c("goedel", "goguen", "lukasiewicz"),
                         n=100,
                         best=c("confidence"),
                         minSupport=0.02,
@@ -62,7 +62,13 @@ searchrules <- function(d,
         stop("'numThreads' must be positive integer number")
     }
 
-    tnorm = match.arg(tnorm)
+    tnorm <- match.arg(tnorm)
+    if (tnorm == 'goedel') {
+        tnorm <- 'minimum'
+    } else if (tnorm == 'goguen') {
+        tnorm <- 'product'
+    }
+
     best = match.arg(best)
 
     config <- list(vars=as.numeric(as.factor(vars(d)[colnames(d)])),

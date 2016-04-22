@@ -39,7 +39,7 @@ aggregate(conseq,
     }
 }
 \details{
-    This function assumes a set of implicative rules with antecedents firing at degrees given in
+    Function assumes a set of implicative rules with antecedents firing at degrees given in
     \code{degrees} and with consequents in \code{conseq}. The meaning of the consequents is modeled
     with fuzzy sets whose membership degree values are captured in the \code{partition} matrix.
 

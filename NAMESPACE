@@ -8,6 +8,7 @@ importFrom("plyr", colwise, llply)
 importFrom("tseries", adf.test)
 importFrom("zoo", rollapply)
 importFrom("utils", head, tail)
+importFrom("stats", as.formula, frequency, is.ts, lm, model.matrix, sd, ts)
 
 exportPattern("^[[:alpha:]]+")
 

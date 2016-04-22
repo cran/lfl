@@ -9,7 +9,7 @@
 \usage{
 fire(x,
      rules,
-     tnorm=c("minimum", "product", "lukasiewicz"),
+     tnorm=c("goedel", "goguen", "lukasiewicz"),
      onlyAnte=TRUE,
      parallel=FALSE)
 }
@@ -26,8 +26,8 @@ fire(x,
         names) must correspond to the \code{x}'s names (of columns if \code{x} is a matrix).
     }
     \item{tnorm}{
-        A character string representing a triangular norm to be used (either \code{"minimum"},
-        \code{"product"}, or \code{"lukasiewicz"}) or an arbitrary function that takes a vector 
+        A character string representing a triangular norm to be used (either \code{"goedel"},
+        \code{"goguen"}, or \code{"lukasiewicz"}) or an arbitrary function that takes a vector 
         of truth values and returns a t-norm computed of them.
     }
     \item{onlyAnte}{
@@ -92,7 +92,7 @@ rules <- list(c('a', 'c', 'e'),
               c('b'),
               c('d', 'a'),
               c('c', 'a', 'b'))
-fire(x, rules, tnorm='product')
+fire(x, rules, tnorm='goguen')
 
 # fire antecedents of the rules on a matrix
 x <- matrix(1:20 / 20, nrow=2)
@@ -101,10 +101,10 @@ rules <- list(c('a', 'c', 'e'),
               c('b'),
               c('d', 'a'),
               c('c', 'a', 'b'))
-fire(x, rules, tnorm='min', onlyAnte=TRUE)
+fire(x, rules, tnorm='goedel', onlyAnte=TRUE)
 
 # the former command should be equal to
-fire(x, antecedents(rules), tnorm='min')
+fire(x, antecedents(rules), tnorm='goedel')
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

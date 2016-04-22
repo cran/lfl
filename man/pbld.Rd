@@ -31,7 +31,7 @@ pbld(x,
         where each element is a fuzzy set name (a predicate) and thus each such vector forms a rule.
     }
     \item{partition}{
-        A \code{\link{fsets}} object with columns corresponding to consequent predicates in
+        A \code{\link{fsets}} object with columns that are consequents in
         \code{rules}. These membership degrees must correspond to \code{values}.
     }
     \item{values}{

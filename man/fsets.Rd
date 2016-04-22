@@ -35,8 +35,8 @@ specs(x)
         original variable, the same name is stored on appropriate positions of the \code{vars} vector.
     }
     \item{specs}{
-        A square numeric matrix containing values from \eqn{\{0, 1\}}. It is a specificity matrix
-        for which each row and column corresponds to an \code{x}'s column. \code{specs[i][j] = 1} if
+        A square numeric matrix containing values from \eqn{\{0, 1\}}. It is a specificity matrix,
+        for which both rows and columns correspond to \code{x}'s columns and where \code{specs[i][j] = 1} if
         and only if the \eqn{i}-th fuzzy set (i.e. \code{x[, i]}) is more specific (i.e. is a subset
         of) than the \eqn{j}-th fuzzy set (i.e. \code{x[, j]}).
     }

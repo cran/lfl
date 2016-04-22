@@ -40,7 +40,7 @@ fcut(x, ...)
         an ordered vector of numbers such that the \eqn{i}-th index specifies the beginning,
         \eqn{(i+1)}-th the center, and \eqn{(i+2)}-th the ending of the \eqn{i}-th fuzzy set.
         
-        I.e. the minimum number of breaks-points is 3; \eqn{n-1} elementary fuzzy sets would be
+        I.e. the minimum number of breaks-points is 3; \eqn{n-2} elementary fuzzy sets would be
         created for \eqn{n} break-points.
         
         If considering an i-th fuzzy set
@@ -52,9 +52,8 @@ fcut(x, ...)
         The resulting fuzzy sets would be named after the original data by adding dot (".") and a
         number \eqn{i} of fuzzy set.
 
-        Unlike \code{\link{cut}}, \code{x} values that are outside the given break-points (lower than
-        \code{min(breaks)} or greater than \code{max(breaks)}) would have all memberhsip degrees
-        equal to zero.
+        Unlike \code{\link{cut}}, \code{x} values, that are lower or greater than the given
+        break-points, will have all memberhsip degrees equal to zero.
 
         For non-numeric data, this argument is ignored. For \code{x} being a numeric vector, it must
         be a vector of numeric values. For \code{x} being a numeric matrix or data frame, it must
@@ -68,8 +67,8 @@ fcut(x, ...)
         of the argument \code{x}.
     }
     \item{type}{
-        The type of fuzzy sets to be considered. Currently, \code{'triangle'} or \code{'raisedcos'}
-        may be provided. The \code{type} argument may be also a function of 4 arguments that from
+        The type of fuzzy sets to create Currently, \code{'triangle'} or \code{'raisedcos'}
+        may be used. The \code{type} argument may be also a function of 4 arguments that from
         the value of the first argument, and considering the boundaries given by the next 3
         arguments, computes a membership degree. See e.g. \code{\link{triangle}} or
         \code{\link{raisedcos}} for details on how such function should look like.

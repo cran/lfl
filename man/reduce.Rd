@@ -8,8 +8,8 @@
 }
 \usage{
 reduce(x, rules, ratio, 
-       tnorm = c("minimum", "product", "lukasiewicz"),
-       tconorm = c("maximum", "product", "lukasiewicz"),
+       tnorm = c("goedel", "goguen", "lukasiewicz"),
+       tconorm = c("goedel", "goguen", "lukasiewicz"),
        numThreads = 1)
 }
 \arguments{
@@ -30,11 +30,11 @@ reduce(x, rules, ratio,
         the same as coverage of input \code{rules}. A sensible value is e.g. 0.9.
     }
     \item{tnorm}{
-        Which t-norm to use as a conjunction of antecedents. The default is minimum.
+        Which t-norm to use as a conjunction of antecedents. The default is \code{"goedel"}.
     }
     \item{tconorm}{
         Which t-norm to use as a disjunction, i.e. to combine multiple antecedents to get coverage
-        of the rule base. The default is maximum.
+        of the rule base. The default is \code{"goedel"}.
     }
     \item{numThreads}{
         How many threads to use for computation. Value higher than 1 causes that the algorithm runs

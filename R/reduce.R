@@ -1,8 +1,8 @@
 reduce <- function(x,
                     rules,
                     ratio,
-                    tnorm=c("minimum", "product", "lukasiewicz"),
-                    tconorm=c("maximum", "product", "lukasiewicz"),
+                    tnorm=c("goedel", "goguen", "lukasiewicz"),
+                    tconorm=c("goedel", "goguen", "lukasiewicz"),
                     numThreads=1) {
     if (is.vector(x)) {
         x <- matrix(x, nrow=1, dimnames=list(NULL, names(x)))
@@ -29,7 +29,18 @@ reduce <- function(x,
     }
 
     tnorm <- match.arg(tnorm)
+    if (tnorm == 'goedel') {
+        tnorm <- 'minimum'
+    } else if (tnorm == 'goguen') {
+        tnorm <- 'product'
+    }
+
     tconorm <- match.arg(tconorm)
+    if (tconorm == 'goedel') {
+        tconorm <- 'maximum'
+    } else if (tconorm == 'goguen') {
+        tconorm <- 'product'
+    }
 
     lhsSupport <- NA
     if (is.farules(origRules) && ('lhsSupport' %in% colnames(origRules$statistics))) {

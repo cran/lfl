@@ -1,6 +1,6 @@
 fire <- function(x, 
                  rules,
-                 tnorm=c("minimum", "product", "lukasiewicz"),
+                 tnorm=c("goedel", "goguen", "lukasiewicz"),
                  onlyAnte=TRUE,
                  parallel=FALSE) {
     if (is.vector(x)) {

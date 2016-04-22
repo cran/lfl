@@ -9,7 +9,7 @@
 \usage{
 rbcoverage(x, 
            rules,
-           tnorm=c("minimum", "product", "lukasiewicz"),
+           tnorm=c("goedel", "goguen", "lukasiewicz"),
            onlyAnte=TRUE)
 }
 \arguments{
@@ -25,8 +25,8 @@ rbcoverage(x,
         names) must correspond to the \code{x}'s names (of columns if \code{x} is a matrix).
     }
     \item{tnorm}{
-        A character string representing a triangular norm to be used (either \code{"minimum"},
-        \code{"product"}, or \code{"lukasiewicz"}) or an arbitrary function that takes a vector 
+        A character string representing a triangular norm to be used (either \code{"goedel"},
+        \code{"goguen"}, or \code{"lukasiewicz"}) or an arbitrary function that takes a vector 
         of truth values and returns a t-norm computed of them.
     }
     \item{onlyAnte}{
@@ -75,12 +75,12 @@ rbcoverage(x,
                   c('b'),
                   c('d', 'a'),
                   c('c', 'a', 'b'))
-    rbcoverage(x, rules, "product", TRUE)  # returns 1
+    rbcoverage(x, rules, "goguen", TRUE)  # returns 1
 
 
     rules <- list(c('d', 'a'),
                   c('c', 'a', 'b'))
-    rbcoverage(x, rules, "product", TRUE)  # returns 0.075)
+    rbcoverage(x, rules, "goguen", TRUE)  # returns 0.075)
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

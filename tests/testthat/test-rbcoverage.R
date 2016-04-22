@@ -6,7 +6,7 @@ test_that('rbcoverage on data vector', {
                   c('d', 'a'),
                   c('c', 'a', 'b'))
 
-    expect_equal(rbcoverage(x, rules, "product", TRUE),
+    expect_equal(rbcoverage(x, rules, "goguen", TRUE),
                  1)
 })
 
@@ -19,22 +19,22 @@ test_that('rbcoverage on data matrix', {
                   c('b'),
                   c('d', 'a'),
                   c('c', 'a', 'b'))
-    expect_equal(rbcoverage(x, rules, "product", TRUE),
+    expect_equal(rbcoverage(x, rules, "goguen", TRUE),
                  1)
 
     rules <- list(c('a', 'c', 'e'),
                   c('d', 'a'),
                   c('c', 'a', 'b'))
-    expect_equal(rbcoverage(x, rules, "product", TRUE),
+    expect_equal(rbcoverage(x, rules, "goguen", TRUE),
                  0.13125)
 
     rules <- list(c('d', 'a'),
                   c('c', 'a', 'b'))
-    expect_equal(rbcoverage(x, rules, "product", TRUE),
+    expect_equal(rbcoverage(x, rules, "goguen", TRUE),
                  0.075)
 
     rules <- list(c('d', 'a'))
-    expect_equal(rbcoverage(x, rules, "product", TRUE),
+    expect_equal(rbcoverage(x, rules, "goguen", TRUE),
                  0.075)
 })
 

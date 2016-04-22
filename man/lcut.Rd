@@ -76,9 +76,9 @@ lcut5(x, ...)
         must be provided everytime.
     }
     \item{defaultCenter}{
-        A value used to determine a typical "medium" value from data (see the \code{context}
+        A value used to determine a typical "medium" value from data (see \code{context}
         above). If \code{context} is not specified then typical "medium" is determined as
-        \eqn{(max(x) - min(x)) * defaultCenter + min(x)}.
+        \deqn{(max(x) - min(x)) * defaultCenter + min(x).}
         Default value of \code{defaultCenter} is 0.5, however, some literature specifies
         0.42 as another sensible value with proper linguistic interpretation.
     }

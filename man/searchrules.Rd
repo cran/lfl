@@ -12,7 +12,7 @@
 searchrules(d,
             lhs=2:ncol(d),
             rhs=1,
-            tnorm=c("minimum", "product", "lukasiewicz"),
+            tnorm=c("goedel", "goguen", "lukasiewicz"),
             n=100,
             best=c("confidence"),
             minSupport=0.02,
@@ -35,7 +35,7 @@ searchrules(d,
   rules, i.e. in the consequent.
 }
   \item{tnorm}{A t-norm to be used for computation of conjunction of fuzzy attributes. (Allowed are
-  even only starting letters of "lukasiewicz", "minimum" and "product").
+  even only starting letters of "lukasiewicz", "goedel" and "goguen").
 }
   \item{n}{The non-negative number of rules to be found. If zero, the function returns all rules
   satisfying the given conditions. If positive, only \code{n} best rules are returned. The criterium
