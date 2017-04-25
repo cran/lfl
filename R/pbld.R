@@ -61,8 +61,8 @@ pbld <- function(x,
             if (length(selected) <= 0) {
                 return(.defuzzEmptyRulebase(values))
             }
-            conseq <- unlist(consequents(selected))
-            degrees <- aggregate(conseq, rep(maxFired, length(conseq)), partition)
+            conseq <- unlist(consequents(rules[most][selected]))
+            degrees <- aggregateConsequents(conseq, rep(maxFired, length(conseq)), partition)
             res <- defuzz(degrees, values, type='dee')
             return(res)
         }
@@ -75,9 +75,8 @@ pbld <- function(x,
             if (length(selected) <= 0) {
                 return(.defuzzEmptyRulebase(values))
             }
-            #conseq <- sapply(selected, function(rule) rule[1]) # get consequents
             conseq <- unlist(consequents(rules[most][selected]))
-            degrees <- aggregate(conseq, fired[most][selected], partition)
+            degrees <- aggregateConsequents(conseq, fired[most][selected], partition)
             res <- defuzz(degrees, values, type='dee')
             return(res)
         }

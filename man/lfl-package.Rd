@@ -30,7 +30,7 @@
 
     To perform Perception-based Logical Deduction (PbLD), please use \code{\link{pbld}} function.
     Another ad-hoc inferences may be programmed with help of \code{\link{fire}},
-    \code{\link{perceive}}, \code{\link{aggregate}}, or \code{\link{defuzz}} functions.
+    \code{\link{perceive}}, \code{\link{aggregateConsequents}}, or \code{\link{defuzz}} functions.
 
     Fuzzy Rule-based Ensemble (FRBE) is a tool for time-series prediction. Several existing
     time-series forecasting methods are combined based on features of given time-series to provide a

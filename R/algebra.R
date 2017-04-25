@@ -83,20 +83,18 @@ goguen.biresiduum <- function(x, y) {
 }
 
 # negations
-
-.internalNeg <- function(x, name) {
+invol.neg <- function(x) {
     vals <- as.numeric(c(x))
-    res <- .Call(name, vals, PACKAGE='lfl')
+    res <- .Call('involNeg', vals, PACKAGE='lfl')
     mostattributes(res) <- attributes(x)
     return(res)
 }
 
-invol.neg <- function(x) {
-    .internalNeg(x, 'involNeg')
-}
-
 strict.neg <- function(x) {
-    .internalNeg(x, 'strictNeg')
+    vals <- as.numeric(c(x))
+    res <- .Call('strictNeg', vals, PACKAGE='lfl')
+    mostattributes(res) <- attributes(x)
+    return(res)
 }
 
 

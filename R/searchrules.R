@@ -103,6 +103,16 @@ searchrules <- function(d,
                        byrow=TRUE,
                        nrow=length(result$statistics))
         colnames(stats) <- c('support', 'lhsSupport', 'rhsSupport', 'confidence', 'lift', 'loLift', 'hiLift')
+
+        stats <- stats[, c('support', 'lhsSupport', 'rhsSupport', 'confidence')]
+
+        if (tnorm == 'product') {
+            stats <- cbind(stats, 
+                           lift=stats[, 'confidence'] / stats[, 'rhsSupport'],
+                           conviction=(1 - stats[, 'rhsSupport']) / (1 - stats[, 'confidence']))
+        }
+
+
         #volume <- .computeVolume(d, rules, tNorm(tnorm))
         #cat("Rules:\n")
         #print(rules)

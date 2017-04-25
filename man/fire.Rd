@@ -75,7 +75,7 @@ fire(x,
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-  \code{\link{aggregate}},
+  \code{\link{aggregateConsequents}},
   \code{\link{defuzz}}
   \code{\link{perceive}},
   \code{\link{pbld}},

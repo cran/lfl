@@ -10,5 +10,5 @@ mult <- function(x, y, f, ...) {
     ff <- function(xx, yy) {
         f(xx, yy, ...)
     }
-    .Call('mult', x, y, ff, PACKAGE='lfl')
+    .Call('multCpp', x, y, ff, PACKAGE='lfl')
 }

@@ -13,6 +13,6 @@
 #include "Rcpp.h"
 
 
-RcppExport SEXP mult(SEXP ax, SEXP ay, SEXP af);
+RcppExport SEXP multCpp(SEXP ax, SEXP ay, SEXP af);
 
 #endif

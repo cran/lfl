@@ -1,4 +1,4 @@
-aggregate <- function(conseq, degrees, partition) {
+aggregateConsequents <- function(conseq, degrees, partition) {
     if (!is.vector(conseq) || !is.character(conseq)) {
         stop("'conseq' must be a character vector")
     }

@@ -14,7 +14,7 @@ using namespace std;
 using namespace lfl::reduce;
 
 
-RcppExport SEXP reduce(SEXP aConfig) {
+RcppExport SEXP reduceCpp(SEXP aConfig) {
     NumericVector result;
     try {
         ReduceConfig reduceConfig;

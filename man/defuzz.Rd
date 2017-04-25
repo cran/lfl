@@ -65,7 +65,7 @@ defuzz(degrees,
 
 \seealso{
     \code{\link{fire}},
-    \code{\link{aggregate}},
+    \code{\link{aggregateConsequents}},
     \code{\link{perceive}},
     \code{\link{pbld}},
     \code{\link{fcut}},

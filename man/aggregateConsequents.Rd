@@ -1,5 +1,5 @@
-\name{aggregate}
-\alias{aggregate}
+\name{aggregateConsequents}
+\alias{aggregateConsequents}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Implicational aggregation of rules' consequents into a fuzzy set}
 \description{
@@ -13,7 +13,7 @@
     defuzzified to obtain crisp result of the inference.
 }
 \usage{
-aggregate(conseq,
+aggregateConsequents(conseq,
           degrees,
           partition)
 }
@@ -83,7 +83,7 @@ aggregate(conseq,
 
     # the result of aggregation is equal to:
     # pmin(1, partition[, 1] + (1 - 0.5), partition[, 2] + (1 - 0.8))
-    aggregate(c('a', 'b'), c(0.5, 0.8), partition)
+    aggregateConsequents(c('a', 'b'), c(0.5, 0.8), partition)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

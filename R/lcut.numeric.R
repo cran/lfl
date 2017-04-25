@@ -86,7 +86,7 @@
     names(vars) <- colnames(res)
 
     specs <- matrix(0, nrow=nrow(.fset3), ncol=nrow(.fset3))
-    specs[row(specs) > col(specs)] <- 1
+    specs[row(specs) < col(specs)] <- 1
     colnames(specs) <- paste(.capitalize(.fset3$short), .capitalize(type), '.', name, sep='')
     rownames(specs) <- colnames(specs)
     specs <- specs[colnames(res), colnames(res), drop=FALSE]

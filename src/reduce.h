@@ -13,7 +13,7 @@
 #include "Rcpp.h"
 
 
-RcppExport SEXP reduce(SEXP aConfig);
+RcppExport SEXP reduceCpp(SEXP aConfig);
 
 
 #endif

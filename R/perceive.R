@@ -1,18 +1,10 @@
-.isspec <- function(r1, r2, vars, specs) {
-    if (r1[1] == r2[1]) {
-        return(.is.specific(r1[-1], r2[-1], vars, specs))
-    }
-    return(FALSE)
-}
-
-
 .perceiveGlobal <- function(rules, vars, specs) {
     lvl <- names(vars)
     config <- list(rules=lapply(rules, function(x) { as.integer(factor(x, levels=lvl)) - 1 }),
                    vars=as.numeric(as.factor(vars[lvl])),
                    specs=specs[lvl, lvl])
     result <- .Call("perceiveGlobal", config, PACKAGE="lfl")
-    return(rules[result])
+    return(result)
 }
 
 
@@ -29,22 +21,18 @@
             for (j in (i+1):len) {
                 if (res[j]) {
                     rj <- rules[[j]]
-                    rispec <- .isspec(ri, rj, vars, specs)
-                    rjspec <- .isspec(ri, rj, vars, specs)
+                    rispec <- .is.specific(ri[-1], rj[-1], vars, specs)
+                    rjspec <- .is.specific(rj[-1], ri[-1], vars, specs)
                     if (rispec || rjspec) {
                         if (fired[i] > fired[j]) {
                             res[j] <- FALSE
-                            break
                         } else if (fired[i] < fired[j]) {
                             res[i] <- FALSE
-                            break
                         } else {
                             if (rispec) {
                                 res[j] <- FALSE
-                                break
                             } else {
                                 res[i] <- FALSE
-                                break
                             }
                         }
                     }
@@ -52,7 +40,8 @@
             }
         }
     }
-    return(seq_along(rules)[res])
+    #return(seq_along(rules)[res])
+    return(res)
 }
 
 

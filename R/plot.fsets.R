@@ -11,5 +11,8 @@ plot.fsets <- function(x, ...) {
     if (is.null(args[['xlab']])) {
         x[['xlab']] <- ''
     }
+    if (is.null(args[['ylab']])) {
+        x[['ylab']] <- ''
+    }
     do.call('ts.plot', x)
 }

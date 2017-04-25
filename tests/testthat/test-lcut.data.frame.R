@@ -62,6 +62,7 @@ test_that('lcut3 on data.frame', {
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,1,1,  #RoBi
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,0,1,  #QrBi
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,0,0), #VrBi
+                byrow=TRUE,
                 nrow=21,
                 ncol=21)
     sfill <- matrix(0, nrow=21, ncol=21)
@@ -125,6 +126,7 @@ test_that('lcut3 on single row data.frame', {
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,1,1,  #RoBi
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,0,1,  #QrBi
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,0,0), #VrBi
+                byrow=TRUE,
                 nrow=21,
                 ncol=21)
     sfill <- matrix(0, nrow=21, ncol=21)
@@ -167,6 +169,7 @@ test_that('lcut3 on data.frame - only single atomic expression', {
                   0,0,0,1,1,  #RoMe
                   0,0,0,0,1,  #QrMe
                   0,0,0,0,0), #VrMe
+                byrow=TRUE,
                 nrow=5,
                 ncol=5)
     sfill <- matrix(0, nrow=5, ncol=5)
@@ -219,6 +222,7 @@ test_that('lcut3 on data.frame - only some hedges and atomic expressions', {
                   0,0,0,0,0,0, 0,0,0,0,1,1,  #RoBi
                   0,0,0,0,0,0, 0,0,0,0,0,1,  #QrBi
                   0,0,0,0,0,0, 0,0,0,0,0,0), #VrBi
+                byrow=TRUE,
                 nrow=12,
                 ncol=12)
     sfill <- matrix(0, nrow=12, ncol=12)
@@ -273,6 +277,7 @@ test_that('lcut3 empty data.frame', {
                   0,0,0,0,0,0, 0,0,0,0,1,1,  #RoBi
                   0,0,0,0,0,0, 0,0,0,0,0,1,  #QrBi
                   0,0,0,0,0,0, 0,0,0,0,0,0), #VrBi
+                byrow=TRUE,
                 nrow=12,
                 ncol=12)
     sfill <- matrix(0, nrow=12, ncol=12)

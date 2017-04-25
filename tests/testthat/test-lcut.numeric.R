@@ -64,6 +64,7 @@ test_that('lcut3 on vector', {
                   0,0,0,0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,0,0), #VrBi
                 nrow=21,
                 ncol=21,
+                byrow=TRUE,
                 dimnames=list(expectedAttrs, expectedAttrs))
     s <- s[colnames(res), colnames(res)]
     expect_equal(specs(res), s)
@@ -120,6 +121,7 @@ test_that('lcut3 on vector (some hedges disabled)', {
                   0,0,0,0,0,0, 0,0,0,0, 0,0,0,0,0,0), #VrBi
                 nrow=16,
                 ncol=16,
+                byrow=TRUE,
                 dimnames=list(expectedAttrs, expectedAttrs))
     s <- s[colnames(res), colnames(res)]
     expect_equal(specs(res), s)

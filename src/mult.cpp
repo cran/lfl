@@ -13,7 +13,7 @@ using namespace Rcpp;
 using namespace std;
 
 
-RcppExport SEXP mult(SEXP ax, SEXP ay, SEXP af) 
+RcppExport SEXP multCpp(SEXP ax, SEXP ay, SEXP af) 
 {
 LFL_BEGIN_TRYCATCH
     NumericMatrix x = ax;

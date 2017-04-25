@@ -82,3 +82,22 @@ test_that('pbld with empty rulebase', {
     res <- pbld(x, rules, partition, values)
     expect_equal(nrow(x), length(res))
 })
+
+
+test_that('pbld complete test', {
+    x <- matrix(seq(0, 0.4, 0.025), nrow=17, ncol=1)
+    colnames(x) <- 'x'
+    inputContext <- c(0, 0.4, 1)
+    input <- lcut3(x, context=inputContext)
+
+    rules <- list(c('Bi.y', 'Sm.x'),
+                c('Me.y', 'RoSm.x'),
+                c('VeSm.y', 'ExSm.x'))
+
+    outputContext <- c(0, 0.4, 1)
+    v <- slices(outputContext[1], outputContext[3], 1000)
+    p <- lcut3(v, name='y', context=outputContext)
+
+    expect_equal(round(pbld(input, rules, p, v), 2), 
+                 c(0.03, 0.91, 0.91, 0.41, 0.41, 0.41, 0.41, 0.42, 0.44, 0.45, rep(0, 7)))
+})

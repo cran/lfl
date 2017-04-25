@@ -80,7 +80,7 @@ pbld(x,
   \code{\link{searchrules}},
   \code{\link{slices}},
   \code{\link{fire}},
-  \code{\link{aggregate}},
+  \code{\link{aggregateConsequents}},
   \code{\link{defuzz}}
 }
 \examples{

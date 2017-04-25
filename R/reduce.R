@@ -58,7 +58,7 @@ reduce <- function(x,
                    tnorm=tnorm,
                    tconorm=tconorm,
                    numThreads=numThreads)
-    result <- .Call("reduce", config, PACKAGE="lfl")
+    result <- .Call("reduceCpp", config, PACKAGE="lfl")
     result <- result + 1
 
     if (is.farules(origRules)) {
