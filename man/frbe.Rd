@@ -82,6 +82,7 @@ frbe(d,
   \code{\link{evalfrbe}}
 }
 \examples{
+\dontrun{
   # prepare data (from the forecast package)
   library(forecast)
   horizon <- 10
@@ -96,7 +97,7 @@ frbe(d,
 
   # display forecast results
   f$mean
-}
+}}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ models }

@@ -37,7 +37,7 @@ LFL_BEGIN_TRYCATCH
             res = vals[i];
         }
     }
-    if (!naRm[0] & na & res > 0) {
+    if ((!naRm[0]) && na && (res > 0)) {
         return wrap(NA_REAL);
     }
     return wrap(res);
@@ -64,7 +64,7 @@ LFL_BEGIN_TRYCATCH
     res -= vals.size();
     if (res <= 0) {
         return wrap(0.0);
-    } else if (!naRm[0] & na) {
+    } else if ((!naRm[0]) && na) {
         return wrap(NA_REAL);
     }
     return wrap(res);
@@ -87,7 +87,7 @@ LFL_BEGIN_TRYCATCH
             res = res * vals[i];
         }
     }
-    if (!naRm[0] & na & res > 0) {
+    if ((!naRm[0]) && na && (res > 0)) {
         return wrap(NA_REAL);
     }
     return wrap(res);
@@ -110,7 +110,7 @@ LFL_BEGIN_TRYCATCH
             res = vals[i];
         }
     }
-    if (!naRm[0] & na & res < 1) {
+    if ((!naRm[0]) && na && (res < 1)) {
         return wrap(NA_REAL);
     }
     return wrap(res);
@@ -135,7 +135,7 @@ LFL_BEGIN_TRYCATCH
     }
     if (res >= 1) {
         return wrap(1.0);
-    } else if (!naRm[0] & na) {
+    } else if ((!naRm[0]) && na) {
         return wrap(NA_REAL);
     }
     return wrap(res);
@@ -158,7 +158,7 @@ LFL_BEGIN_TRYCATCH
             res = res + vals[i] - res * vals[i];
         }
     }
-    if (!naRm[0] & na & res < 1) {
+    if ((!naRm[0]) && na && (res < 1)) {
         return wrap(NA_REAL);
     }
     return wrap(res);

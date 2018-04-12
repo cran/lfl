@@ -104,7 +104,7 @@ searchrules <- function(d,
                        nrow=length(result$statistics))
         colnames(stats) <- c('support', 'lhsSupport', 'rhsSupport', 'confidence', 'lift', 'loLift', 'hiLift')
 
-        stats <- stats[, c('support', 'lhsSupport', 'rhsSupport', 'confidence')]
+        stats <- stats[, c('support', 'lhsSupport', 'rhsSupport', 'confidence'), drop=FALSE]
 
         if (tnorm == 'product') {
             stats <- cbind(stats, 

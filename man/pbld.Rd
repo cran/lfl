@@ -44,7 +44,7 @@ pbld(x,
     \item{parallel}{
         Whether the processing should be run in parallel or not. Parallelization is
         implemented using the \code{\link[foreach]{foreach}} package. The parallel environment must be
-        set properly in advance, e.g. with the \code{\link[doMC]{registerDoMC}} function.
+        set properly in advance, e.g. with the \code{registerDoMC()} function of the \code{doMC} package.
     }
 }
 
@@ -84,30 +84,25 @@ pbld(x,
   \code{\link{defuzz}}
 }
 \examples{
-# --- TRAINING PART ---
-# split data into training and testing set
-testing <- CO2[1:5, ]
-training <- CO2[-1 * 1:5, ]
-
 # custom context of the RHS variable
 uptakeContext <- c(7, 28.3, 46)
 
-# convert training data into fuzzy sets
-d <- lcut3(training, context=list(uptake=uptakeContext))
+# convert data into fuzzy sets
+co2 <- lcut3(CO2, context=list(uptake=uptakeContext))
+
+# split data into training and testing set
+testing <- sel(co2, 1:5)
+training <- sel(co2, -1 * 1:5)
 
 # search for rules
-r <- searchrules(d, lhs=1:38, rhs=39:58)
-
-# --- TESTING PART ---
-# convert testing data info fuzzy sets
-x <- lcut3(testing, context=list(uptake=uptakeContext))
+r <- searchrules(training, lhs=1:38, rhs=39:58)
 
 # prepare values and partition
 v <- slices(uptakeContext[1], uptakeContext[3], 1000)
 p <- lcut3(v, name='uptake', context=uptakeContext)
 
 # do the inference
-pbld(x, r, p, v)
+pbld(testing, r, p, v)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -57,6 +57,7 @@ evalfrbe(fit,
   \code{\link{rmse}}
 }
 \examples{
+\dontrun{
   # prepare data (from the forecast package)
   library(forecast)
   horizon <- 10
@@ -64,7 +65,7 @@ evalfrbe(fit,
   test <- wineind[(length(wineind)-horizon+1):length(wineind)]
   f <- frbe(ts(train, frequency=frequency(wineind)), h=horizon)
   evalfrbe(f, test)
-}
+}}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ models }

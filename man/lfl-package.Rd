@@ -53,6 +53,7 @@
     %~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
 %}
 \examples{
+\dontrun{
 # --- SEARCHING FOR RULES ---
 # split data into training and testing set
 testing <- CO2[1:5, ]
@@ -97,4 +98,4 @@ f$mean
 
 # evaluate the results
 evalfrbe(f, test)
-}
+}}

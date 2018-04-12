@@ -8,7 +8,7 @@
     of the arguments and merges them to the result.
 }
 \usage{
-cbind.fsets(..., deparse.level = 1)
+\method{cbind}{fsets}(..., deparse.level = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

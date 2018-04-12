@@ -8,14 +8,10 @@ fcut.default <- function(x,
         stop('"name" must not be NULL')
     }
 
-    d <- data.frame(x=x)
-    colnames(d) <- paste(name, '.', sep='')
-    res <- model.matrix(~ . + 0, data=d)
-
-    # remove unnecessary attributes from the result
-    attributes(res)$assign <- NULL
-    attributes(res)$contrasts <- NULL
+    x <- as.factor(x)
+    res <- laply(x, function(a) { a == levels(x) }) + 0
     res <- as.matrix(res)
+    colnames(res) <- paste(name, levels(x), sep='.')
 
     theVars <- rep(name, ncol(res))
     names(theVars) <- colnames(res)

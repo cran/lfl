@@ -40,7 +40,7 @@ fire(x,
     \item{parallel}{
         Whether the processing should be run in parallel or not. Parallelization is
         implemented using the \code{\link[foreach]{foreach}} package. The parallel environment must be
-        set properly in advance, e.g. with the \code{\link[doMC]{registerDoMC}} function.
+        set properly in advance, e.g. with the \code{registerDoMC()} function of the \code{doMC} package.
     }
 }
 \details{

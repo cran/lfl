@@ -40,6 +40,7 @@
     \code{\link{frbe}}
 }
 \examples{
+\dontrun{
   # prepare data (from the forecast package)
   library(forecast)
   horizon <- 10
@@ -48,7 +49,7 @@
   f <- frbe(ts(train, frequency=frequency(wineind)), h=horizon)
   print(f)
   print(test)
-}
+}}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ models }
