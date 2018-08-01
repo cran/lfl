@@ -58,7 +58,7 @@ RcppExport SEXP isSpecific(SEXP aConfig) {
         }
     }
 
-    Rule ruleY(rcppY[1]);
+    Rule ruleY(2);
     {
         //ruleY.setConsequent(rcppY[0]);
         IdSet& ante = ruleY.getAntecedent();

@@ -1,4 +1,4 @@
-7bb773bc0e852f546ad5c5fbcb29da8b *DESCRIPTION
+534c7d9e48b355981f1fd8f577b08249 *DESCRIPTION
 c828424df471a69cf66bc2015e54ddf4 *NAMESPACE
 faa6cede2a7332824a55e9baec0a27d0 *R/aggregateConsequents.R
 574a78c30118d758deb18f9715029294 *R/algebra.R
@@ -83,7 +83,6 @@ e1de75f9caefdc631e5e2187ff2e7559 *man/head.farules.Rd
 5cfa8f7de24d1eaf0bffafa52f6c5a50 *man/is.fsets.Rd
 0b96a1dfd875af633b0d49822e699903 *man/is.specific.Rd
 d9964f0a2a78401e0120897373378688 *man/lcut.Rd
-589dd0be22d8197cd7190c879e8be13d *man/lfl-package.Rd
 bc9d2c6d9cc8c58220be97dc260b49de *man/mult.Rd
 bd19d4a23fa242f33acc765d2e0d2d7d *man/pbld.Rd
 0c822887b546b6df3c48e215e2568db3 *man/perceive.Rd
@@ -107,7 +106,7 @@ f41896c4622cd8824f47887be2c0f06b *src/Makevars.win
 dc5ba2fe8a56f653fca84713c1623e34 *src/common/Chain.h
 2dfa1ddfe3977c8ddbb32c9ac366b34d *src/common/ChainCombiner.h
 096072fc3d21db6af6403d6f9886efa4 *src/common/Data.h
-9d7cb031b9a5701af32fee96a01db1ca *src/isSpecific.cpp
+b2a53f11b6f4c194c51ad5e9c95ae5db *src/isSpecific.cpp
 86ed38eddd1ea4fb4049cb44ab2ef1b3 *src/isSpecific.h
 cca3f312c4f6177ac17c4ed2230b42c8 *src/lfl_init.c
 37e7dfcce85e76ea19e18ef45c374e1e *src/mult.cpp
