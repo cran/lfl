@@ -5,20 +5,20 @@
  */
 
 
-#include "reduce.h"
+#include <Rcpp.h>
+#include <common.h>
 #include "reduce/Reduce.h"
-
 
 using namespace Rcpp;
 using namespace std;
 using namespace lfl::reduce;
 
 
-RcppExport SEXP reduceCpp(SEXP aConfig) {
+// [[Rcpp::export(name=".reduce")]]
+NumericVector reduce(List config) {
     NumericVector result;
     try {
         ReduceConfig reduceConfig;
-        List config(aConfig);
 
         NumericMatrix rcppData = config["data"];
         NumericVector ratio = config["ratio"];

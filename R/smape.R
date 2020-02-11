@@ -1,11 +1,20 @@
+#' Compute Symmetric Mean Absolute Percentage Error (SMAPE)
+#'
+#' SMAPE is computed as \eqn{mean(abs(forecast - validation) / ((abs(forecast) + abs(validation)) / 2))}.
+#'
+#' @param forecast A numeric vector of forecasted values
+#' @param validation A numeric vector of actual (real) values
+#' @return A Symmetric Mean Absolute Percentage Error (SMAPE)
+#' @author Michal Burda
+#' @seealso [rmse()], [mase()], [frbe()]
+#' @export
 smape <- function(forecast, validation) {
-  stopifnot(is.vector(forecast, mode='numeric'))
-  stopifnot(is.vector(validation, mode='numeric'))
-  stopifnot(!anyNA(forecast))
-  stopifnot(!anyNA(validation))
-  stopifnot(length(forecast) == length(validation))
+  .mustBeNumericVector(forecast)
+  .mustBeNumericVector(validation)
+  .mustNotHaveNA(forecast)
+  .mustNotHaveNA(validation)
+  .mustBe(length(forecast) == length(validation), "Length of 'forecast' and 'validation' must be equal")
+  .mustBe(length(forecast) > 1, "Length of both 'forecast' and 'validation' must be greater than zero")
 
-  r <- abs(forecast - validation) / ((abs(forecast) + abs(validation)) / 2)
-  r <- mean(r)
-  return(r)
+  return(mean(abs(forecast - validation) / ((abs(forecast) + abs(validation)) / 2)))
 }

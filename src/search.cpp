@@ -5,24 +5,23 @@
  */
 
 
-#include "search.h"
+#include <Rcpp.h>
+#include <common.h>
 #include "search/Search.h"
 #include "search/BasicExtension.h"
 #include "search/TrieExtension.h"
 
 #include <iostream>
 
-
 using namespace Rcpp;
 using namespace std;
 using namespace lfl::search;
 
 
-RcppExport SEXP search(SEXP aData, SEXP aConfig) {
+// [[Rcpp::export(name=".search")]]
+List search(NumericMatrix rcppData, List config) {
     List result;
     try {
-        NumericMatrix rcppData(aData);
-        List config(aConfig);
         SearchConfig searchConfig;
 
         NumericVector rcppVars = config["vars"];

@@ -20,4 +20,14 @@ test_that('aggregateConsequents', {
                            c(0.5, 0.8),
                            partition),
                  pmin(1, partition[, 1] + 0.5, partition[, 2] + 0.2))
+    
+    expect_equal(aggregateConsequents(c('a', 'b'),
+                           c(0.5, 0.8),
+                           partition,
+                           firing=pgoedel.tnorm,
+                           aggreg=pgoedel.tconorm),
+                 pmax(pmin(partition[, 1], 0.5), pmin(partition[, 2], 0.8)))
+    
+    expect_equal(aggregateConsequents(as.character(c()), as.numeric(c()), partition),
+                 rep(1, nrow(partition)))
 })

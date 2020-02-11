@@ -2,7 +2,7 @@ test_that('pbld', {
     # init fsets
     .vars <- c(rep('b', 3),
                rep('c', 3))
-    names(.vars) <- paste(rep(c('VeSm', 'Sm', 'Bi'), times=2),
+    names(.vars) <- paste(rep(c('ve.sm', 'sm', 'bi'), times=2),
                           rep(c('b', 'c'), each=3),
                           sep='.')
 
@@ -10,7 +10,7 @@ test_that('pbld', {
     .specs <- matrix(c(0,1,0, 0,0,0,
                        0,0,0, 0,0,0,
                        0,0,0, 0,0,0,
- 
+
                        0,0,0, 0,1,0,
                        0,0,0, 0,0,0,
                        0,0,0, 0,0,0),
@@ -25,16 +25,16 @@ test_that('pbld', {
     x <- fsets(x, vars=.vars, specs=.specs)
 
     # init rules
-    rules <- list(c('Sm.b', 'VeSm.c'),
-                  c('Sm.b', 'Sm.c'),
-                  c('Bi.b', 'Bi.b'),
-                  c('Bi.b', 'Sm.c', 'Sm.b'))
+    rules <- list(c('sm.b', 've.sm.c'),
+                  c('sm.b', 'sm.c'),
+                  c('bi.b', 'bi.b'),
+                  c('bi.b', 'sm.c', 'sm.b'))
 
     # init values
     values <- 0:10 / 10
 
     # init partition
-    partition <- lcut3(data.frame(b=values))
+    partition <- lcut(data.frame(b=values))
 
 
     res <- pbld(x, rules, partition, values)
@@ -47,7 +47,7 @@ test_that('pbld with empty rulebase', {
     # init fsets
     .vars <- c(rep('b', 3),
                rep('c', 3))
-    names(.vars) <- paste(rep(c('VeSm', 'Sm', 'Bi'), times=2),
+    names(.vars) <- paste(rep(c('ve.sm', 'sm', 'bi'), times=2),
                           rep(c('b', 'c'), each=3),
                           sep='.')
 
@@ -55,7 +55,7 @@ test_that('pbld with empty rulebase', {
     .specs <- matrix(c(0,1,0, 0,0,0,
                        0,0,0, 0,0,0,
                        0,0,0, 0,0,0,
- 
+
                        0,0,0, 0,1,0,
                        0,0,0, 0,0,0,
                        0,0,0, 0,0,0),
@@ -76,7 +76,7 @@ test_that('pbld with empty rulebase', {
     values <- 0:10 / 10
 
     # init partition
-    partition <- lcut3(data.frame(b=values))
+    partition <- lcut(data.frame(b=values))
 
 
     res <- pbld(x, rules, partition, values)
@@ -87,17 +87,17 @@ test_that('pbld with empty rulebase', {
 test_that('pbld complete test', {
     x <- matrix(seq(0, 0.4, 0.025), nrow=17, ncol=1)
     colnames(x) <- 'x'
-    inputContext <- c(0, 0.4, 1)
-    input <- lcut3(x, context=inputContext)
+    inputContext <- ctx3(0, 0.4, 1)
+    input <- lcut(x, context=inputContext)
 
-    rules <- list(c('Bi.y', 'Sm.x'),
-                c('Me.y', 'RoSm.x'),
-                c('VeSm.y', 'ExSm.x'))
+    rules <- list(c('bi.y', 'sm.x'),
+                c('me.y', 'ro.sm.x'),
+                c('ve.sm.y', 'ex.sm.x'))
 
-    outputContext <- c(0, 0.4, 1)
-    v <- slices(outputContext[1], outputContext[3], 1000)
-    p <- lcut3(v, name='y', context=outputContext)
+    outputContext <- ctx3(0, 0.4, 1)
+    v <- seq(outputContext[1], outputContext[3], length.out=1000)
+    p <- lcut(v, name='y', context=outputContext)
 
-    expect_equal(round(pbld(input, rules, p, v), 2), 
+    expect_equal(round(pbld(input, rules, p, v), 2),
                  c(0.03, 0.91, 0.91, 0.41, 0.41, 0.41, 0.41, 0.42, 0.44, 0.45, rep(0, 7)))
 })

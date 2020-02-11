@@ -1,5 +1,5 @@
 AC_INIT(lfl)
-AC_CONFIG_SRCDIR([src/search.cpp])
+AC_CONFIG_SRCDIR([src])
 
 # find R home and set CC/CFLAGS
 : ${R_HOME=`R RHOME`}

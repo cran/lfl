@@ -1,104 +1,52 @@
 test_that('perceive global', {
-    .vars <- c(rep('a', 3),
-              rep('b', 3),
-              rep('c', 3),
-              rep('d', 3))
-    names(.vars) <- paste(rep(c('VeSm', 'Sm', 'Bi'), times=4),
-                         rep(c('a', 'b', 'c', 'd'), each=3),
-                         sep='.')
-
-    .specs <- matrix(c(0,1,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-
-                      0,0,0, 0,1,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-
-                      0,0,0, 0,0,0, 0,1,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-
-                      0,0,0, 0,0,0, 0,0,0, 0,1,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0),
-                    byrow=TRUE,
-                    ncol=12)
-    colnames(.specs) = names(.vars)
-    rownames(.specs) = names(.vars)
+    f <- lcut(data.frame(a=0:1, b=0:1, c=0:1, d=0:1))
 
     runPerceive <- function(...) {
-        ret <- perceive(list(...), .vars, .specs)
+        ret <- perceive(list(...), fsets=f)
         return(ret)
     }
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Sm.d', 'VeSm.a', 'Bi.c'),
-                             c('Sm.d', 'Sm.b', 'Sm.c')),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('sm.d', 've.sm.a', 'bi.c'),
+                             c('sm.d', 'sm.b', 'sm.c')),
                  c(F, T, T))
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Sm.d', 'VeSm.a', 'Sm.c'),
-                             c('Sm.d', 'Sm.b', 'Sm.c')),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('sm.d', 've.sm.a', 'sm.c'),
+                             c('sm.d', 'sm.b', 'sm.c')),
                  c(T, T, T))
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Bi.d', 'VeSm.a', 'Bi.c'),
-                             c('Sm.d', 'Sm.b', 'Sm.c')),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('bi.d', 've.sm.a', 'bi.c'),
+                             c('sm.d', 'sm.b', 'sm.c')),
                  c(F, T, T))
 })
 
 
 test_that('perceive local', {
-    .vars <- c(rep('a', 3),
-              rep('b', 3),
-              rep('c', 3),
-              rep('d', 3))
-    names(.vars) <- paste(rep(c('VeSm', 'Sm', 'Bi'), times=4),
-                         rep(c('a', 'b', 'c', 'd'), each=3),
-                         sep='.')
-
-    .specs <- matrix(c(0,1,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-
-                      0,0,0, 0,1,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-
-                      0,0,0, 0,0,0, 0,1,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-
-                      0,0,0, 0,0,0, 0,0,0, 0,1,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0,
-                      0,0,0, 0,0,0, 0,0,0, 0,0,0),
-                    byrow=TRUE,
-                    ncol=12)
-    colnames(.specs) = names(.vars)
-    rownames(.specs) = names(.vars)
+    f <- lcut(data.frame(a=0:1, b=0:1, c=0:1, d=0:1))
 
     runPerceive <- function(..., fired) {
-        return(perceive(list(...), .vars, .specs, type='local', fired=fired))
+        return(perceive(list(...), fsets=f, type='local', fired=fired))
     }
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Sm.d', 'VeSm.a', 'Bi.c'),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('sm.d', 've.sm.a', 'bi.c'),
                              fired=c(0.3, 0.4)),
                  c(F, T))
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Sm.d', 'VeSm.a', 'Bi.c'),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('sm.d', 've.sm.a', 'bi.c'),
                              fired=c(0.4, 0.3)),
                  c(T, F))
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Sm.d', 'VeSm.a', 'Bi.c'),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('sm.d', 've.sm.a', 'bi.c'),
                              fired=c(0.4, 0.4)),
                  c(F, T))
 
-    expect_equal(runPerceive(c('Sm.d', 'Sm.a', 'Bi.c'),
-                             c('Sm.d', 'VeSm.a', 'Bi.c'),
+    expect_equal(runPerceive(c('sm.d', 'sm.a', 'bi.c'),
+                             c('sm.d', 've.sm.a', 'bi.c'),
                              fired=c(1, 1)),
                  c(F, T))
 })

@@ -5,20 +5,15 @@
  */
 
 
-#include "algebra.h"
-#include <common.h>
+#include <Rcpp.h>
 
 
 using namespace Rcpp;
-using namespace std;
 
 
-RcppExport SEXP multCpp(SEXP ax, SEXP ay, SEXP af) 
+// [[Rcpp::export(name=".mult")]]
+RcppExport SEXP mult(NumericMatrix x, NumericMatrix y, Function f)
 {
-LFL_BEGIN_TRYCATCH
-    NumericMatrix x = ax;
-    NumericMatrix y = ay;
-    Function f = af;
     NumericMatrix res(x.nrow(), y.ncol());
     for (int i = 0; i < x.nrow(); ++i) {
         for (int j = 0; j < y.ncol(); ++j) {
@@ -30,6 +25,5 @@ LFL_BEGIN_TRYCATCH
         }
     }
     return res;
-LFL_END_TRYCATCH
 }
 

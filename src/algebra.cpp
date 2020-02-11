@@ -5,172 +5,137 @@
  */
 
 
-#include "algebra.h"
-#include <common.h>
+#include <Rcpp.h>
 
-
-#define testInvalids(x) \
-    if ((x) < 0 || (x) > 1) {                \
-        stop("argument out of range 0..1");  \
-    }                                        \
-    if (R_IsNaN((x))) {                      \
-        stop("NaN argument");                \
-    }                                        \
-    
 
 using namespace Rcpp;
-using namespace std;
 
 
-RcppExport SEXP minNorm(SEXP aVals, SEXP aNaRm) 
+inline void testInvalids(double x) {
+    if ((x) < 0 || (x) > 1) {
+        stop("argument out of range 0..1");
+    }
+}
+
+
+// [[Rcpp::export(name=".goedel.tnorm")]]
+double goedel_tnorm(NumericVector vals)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector vals = aVals;
-    LogicalVector naRm = aNaRm;
+    if (vals.size() <= 0) {
+        return NA_REAL;
+    }
     double res = 1.0;
-    bool na = false;
     for (int i = 0; i < vals.size(); ++i) {
         testInvalids(vals[i]);
-        if (R_IsNA(vals[i])) {
-            na = true;
+        if (NumericVector::is_na(vals[i])) {
+            return NA_REAL;
         } else if (vals[i] < res) {
             res = vals[i];
         }
     }
-    if ((!naRm[0]) && na && (res > 0)) {
-        return wrap(NA_REAL);
-    }
-    return wrap(res);
-LFL_END_TRYCATCH
+    return res;
 }
 
 
-RcppExport SEXP lukNorm(SEXP aVals, SEXP aNaRm) 
+// [[Rcpp::export(name=".lukas.tnorm")]]
+double lukas_tnorm(NumericVector vals)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector vals = aVals;
-    LogicalVector naRm = aNaRm;
+    if (vals.size() <= 0) {
+        return NA_REAL;
+    }
     double res = 1.0;
-    bool na = false;
     for (int i = 0; i < vals.size(); ++i) {
         testInvalids(vals[i]);
-        if (R_IsNA(vals[i])) {
-            na = true;
-            ++res;
+        if (NumericVector::is_na(vals[i])) {
+            return NA_REAL;
         } else {
             res += vals[i];
         }
     }
     res -= vals.size();
-    if (res <= 0) {
-        return wrap(0.0);
-    } else if ((!naRm[0]) && na) {
-        return wrap(NA_REAL);
-    }
-    return wrap(res);
-LFL_END_TRYCATCH
+    return res > 0 ? res : 0;
 }
 
 
-RcppExport SEXP prodNorm(SEXP aVals, SEXP aNaRm) 
+// [[Rcpp::export(name=".goguen.tnorm")]]
+double goguen_tnorm(NumericVector vals)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector vals = aVals;
-    LogicalVector naRm = aNaRm;
+    if (vals.size() <= 0) {
+        return NA_REAL;
+    }
     double res = 1.0;
-    bool na = false;
     for (int i = 0; i < vals.size(); ++i) {
         testInvalids(vals[i]);
-        if (R_IsNA(vals[i])) {
-            na = true;
+        if (NumericVector::is_na(vals[i])) {
+            return NA_REAL;
         } else {
             res = res * vals[i];
         }
     }
-    if ((!naRm[0]) && na && (res > 0)) {
-        return wrap(NA_REAL);
-    }
-    return wrap(res);
-LFL_END_TRYCATCH
+    return res;
 }
 
 
-RcppExport SEXP maxConorm(SEXP aVals, SEXP aNaRm) 
+// [[Rcpp::export(name=".goedel.tconorm")]]
+double goedel_tconorm(NumericVector vals)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector vals = aVals;
-    LogicalVector naRm = aNaRm;
+    if (vals.size() <= 0) {
+        return NA_REAL;
+    }
     double res = 0.0;
-    bool na = false;
     for (int i = 0; i < vals.size(); ++i) {
         testInvalids(vals[i]);
-        if (R_IsNA(vals[i])) {
-            na = true;
-        } else if (vals[i] > res) { 
+        if (NumericVector::is_na(vals[i])) {
+            return NA_REAL;
+        } else if (vals[i] > res) {
             res = vals[i];
         }
     }
-    if ((!naRm[0]) && na && (res < 1)) {
-        return wrap(NA_REAL);
-    }
-    return wrap(res);
-LFL_END_TRYCATCH
+    return res;
 }
 
 
-RcppExport SEXP lukConorm(SEXP aVals, SEXP aNaRm) 
+// [[Rcpp::export(name=".lukas.tconorm")]]
+double lukas_tconorm(NumericVector vals)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector vals = aVals;
-    LogicalVector naRm = aNaRm;
+    if (vals.size() <= 0) {
+        return NA_REAL;
+    }
     double res = 0.0;
-    bool na = false;
     for (int i = 0; i < vals.size(); ++i) {
         testInvalids(vals[i]);
-        if (R_IsNA(vals[i])) {
-            na = true;
+        if (NumericVector::is_na(vals[i])) {
+            return NA_REAL;
         } else {
             res += vals[i];
         }
     }
-    if (res >= 1) {
-        return wrap(1.0);
-    } else if ((!naRm[0]) && na) {
-        return wrap(NA_REAL);
-    }
-    return wrap(res);
-LFL_END_TRYCATCH
+    return res >= 1 ? 1 : res;
 }
 
 
-RcppExport SEXP prodConorm(SEXP aVals, SEXP aNaRm) 
+// [[Rcpp::export(name=".goguen.tconorm")]]
+double goguen_tconorm(NumericVector vals)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector vals = aVals;
-    LogicalVector naRm = aNaRm;
+    if (vals.size() <= 0) {
+        return NA_REAL;
+    }
     double res = 0.0;
-    bool na = false;
     for (int i = 0; i < vals.size(); ++i) {
         testInvalids(vals[i]);
-        if (R_IsNA(vals[i])) {
-            na = true;
+        if (NumericVector::is_na(vals[i])) {
+            return NA_REAL;
         } else {
             res = res + vals[i] - res * vals[i];
         }
     }
-    if ((!naRm[0]) && na && (res < 1)) {
-        return wrap(NA_REAL);
-    }
-    return wrap(res);
-LFL_END_TRYCATCH
+    return res;
 }
 
 
-RcppExport SEXP goedelImpl(SEXP aX, SEXP aY)
+// [[Rcpp::export(name=".goedel.residuum")]]
+NumericVector goedel_residuum(NumericVector x, NumericVector y)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector x = aX;
-    NumericVector y = aY;
     int n = x.size() > y.size() ? x.size() : y.size();
     NumericVector res(n);
     for (int i = 0; i < n; ++i) {
@@ -178,9 +143,7 @@ LFL_BEGIN_TRYCATCH
         int yi = i % y.size();
         testInvalids(x[xi]);
         testInvalids(y[yi]);
-        if (x[xi] == 0) {
-            res[i] = 1;
-        } else if (R_IsNA(x[xi]) || R_IsNA(y[yi])) {
+        if (NumericVector::is_na(x[xi]) || NumericVector::is_na(y[yi])) {
             res[i] = NA_REAL;
         } else if (x[xi] <= y[yi]) {
             res[i] = 1;
@@ -189,15 +152,12 @@ LFL_BEGIN_TRYCATCH
         }
     }
     return res;
-LFL_END_TRYCATCH
 }
 
 
-RcppExport SEXP lukasImpl(SEXP aX, SEXP aY)
+// [[Rcpp::export(name=".lukas.residuum")]]
+NumericVector lukas_residuum(NumericVector x, NumericVector y)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector x = aX;
-    NumericVector y = aY;
     int n = x.size() > y.size() ? x.size() : y.size();
     NumericVector res(n);
     for (int i = 0; i < n; ++i) {
@@ -205,9 +165,7 @@ LFL_BEGIN_TRYCATCH
         int yi = i % y.size();
         testInvalids(x[xi]);
         testInvalids(y[yi]);
-        if (x[xi] == 0) {
-            res[i] = 1;
-        } else if (R_IsNA(x[xi]) || R_IsNA(y[yi])) {
+        if (NumericVector::is_na(x[xi]) || NumericVector::is_na(y[yi])) {
             res[i] = NA_REAL;
         } else if (x[xi] <= y[yi]) {
             res[i] = 1;
@@ -216,15 +174,12 @@ LFL_BEGIN_TRYCATCH
         }
     }
     return res;
-LFL_END_TRYCATCH
 }
 
 
-RcppExport SEXP goguenImpl(SEXP aX, SEXP aY)
+// [[Rcpp::export(name=".goguen.residuum")]]
+NumericVector goguen_residuum(NumericVector x, NumericVector y)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector x = aX;
-    NumericVector y = aY;
     int n = x.size() > y.size() ? x.size() : y.size();
     NumericVector res(n);
     for (int i = 0; i < n; ++i) {
@@ -232,9 +187,7 @@ LFL_BEGIN_TRYCATCH
         int yi = i % y.size();
         testInvalids(x[xi]);
         testInvalids(y[yi]);
-        if (x[xi] == 0) {
-            res[i] = 1;
-        } else if (R_IsNA(x[xi]) || R_IsNA(y[yi])) {
+        if (NumericVector::is_na(x[xi]) || NumericVector::is_na(y[yi])) {
             res[i] = NA_REAL;
         } else if (x[xi] <= y[yi]) {
             res[i] = 1;
@@ -243,36 +196,32 @@ LFL_BEGIN_TRYCATCH
         }
     }
     return res;
-LFL_END_TRYCATCH
 }
 
 
-RcppExport SEXP involNeg(SEXP aX)
+// [[Rcpp::export(name=".invol.neg")]]
+NumericVector invol_neg(NumericVector x)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector x = aX;
     NumericVector res(x.size());
     for (int i = 0; i < x.size(); ++i) {
         testInvalids(x[i]);
-        if (R_IsNA(x[i])) {
+        if (NumericVector::is_na(x[i])) {
             res[i] = NA_REAL;
         } else {
             res[i] = 1 - x[i];
         }
     }
     return res;
-LFL_END_TRYCATCH
 }
 
 
-RcppExport SEXP strictNeg(SEXP aX)
+// [[Rcpp::export(name=".strict.neg")]]
+NumericVector strict_neg(NumericVector x)
 {
-LFL_BEGIN_TRYCATCH
-    NumericVector x = aX;
     NumericVector res(x.size());
     for (int i = 0; i < x.size(); ++i) {
         testInvalids(x[i]);
-        if (R_IsNA(x[i])) {
+        if (NumericVector::is_na(x[i])) {
             res[i] = NA_REAL;
         } else if (x[i] == 0) {
             res[i] = 1;
@@ -281,7 +230,4 @@ LFL_BEGIN_TRYCATCH
         }
     }
     return res;
-LFL_END_TRYCATCH
 }
-
-

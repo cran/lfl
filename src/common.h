@@ -16,18 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <set>
-
-
-#define LFL_BEGIN_TRYCATCH \
-    try {
-
-#define LFL_END_TRYCATCH \
-    } catch(std::exception &ex) {       \
-	forward_exception_to_r(ex);     \
-    } catch(...) {                      \
-	::Rf_error("c++ exception (unknown reason)"); \
-    }                                   \
-    return wrap(NA_REAL);               \
+#include <algorithm>
 
 
 #define printVector(x) { \
@@ -76,5 +65,6 @@ inline std::ostream& operator<< (std::ostream& stream, const IdSet& obj) {
     }
     return stream;
 }
+
 
 #endif

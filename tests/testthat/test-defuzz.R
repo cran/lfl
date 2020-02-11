@@ -5,6 +5,15 @@ test_that('defuzz mom', {
                  7)
     expect_equal(defuzz(c(0, 0, 0, 0.1, 0.3, 0.9, 0.9, 0.8, 0.2, 0), 1:10, type='mom'),
                  6.5)
+
+    expect_equal(defuzz(rev(c(0, 0, 0, 0.1, 0.3, 0.9, 0.9, 0.8, 0.2, 0)),
+                        rev(1:10),
+                        type='mom'),
+                 6.5)
+    expect_equal(defuzz(c(0, 1, 0.3, 0.3, 0, 0, 1),
+                        c(1, 7, 4, 5, 2, 3, 6),
+                        type='mom'),
+                 6.5)
 })
 
 test_that('defuzz fom', {
