@@ -62,7 +62,7 @@ sets would be created for \eqn{n} break-points.
 
 If considering an i-th fuzzy set (of \code{type='triangle'}), \code{x}
 values lower than \eqn{i}-th break (and greater than \eqn{(i+2)}-th break)
-would result in zero memberhsip degree, values equal to \eqn{(i+1)}-th break
+would result in zero membership degree, values equal to \eqn{(i+1)}-th break
 would have membership degree equal 1 and values between them the appropriate
 membership degree between 0 and 1.
 
@@ -70,7 +70,7 @@ The resulting fuzzy sets would be named after the original data by adding
 dot (".") and a number \eqn{i} of fuzzy set.
 
 Unlike \code{\link[base:cut]{base::cut()}}, \code{x} values, that are lower or greater than
-the given break-points, will have all memberhsip degrees equal to zero.
+the given break-points, will have all membership degrees equal to zero.
 
 For non-numeric data, this argument is ignored. For \code{x} being a numeric
 vector, it must be a vector of numeric values. For \code{x} being a numeric
@@ -85,7 +85,7 @@ function with 3 or 4 arguments:
 membership degrees from values of the first argument while considering
 the boundaries given by the next 3 arguments;
 \item if \code{type} is a 3-argument function, it is assumed that it is a factory
-function similar to \code{\link[=triangular]{triangular()}} or \code{\link[=raisedcosinal]{raisedcosinal()}}, which, from given
+function similar to \code{\link[=triangular]{triangular()}} or \code{\link[=raisedcosine]{raisedcosine()}}, which, from given
 three boundaries, creates a function that computes membership degrees.
 }}
 
@@ -153,7 +153,7 @@ specifying th second fuzzy set etc. The shape of the fuzzy set is determined
 by the \code{type} argument that may be equal either to a string
 \code{'triangle'} or \code{'raisedcos'} or it could be a function that
 computes the membership degrees for itself (see \code{\link[=triangular]{triangular()}} or
-\code{\link[=raisedcosinal]{raisedcosinal()}} functions for details). Additionally, super-sets of
+\code{\link[=raisedcosine]{raisedcosine()}} functions for details). Additionally, super-sets of
 these elementary sets may be created by specifying the \code{merge}
 argument. Values of this argument specify how many consecutive fuzzy sets
 should be combined (by using the Lukasiewic's t-conorm) to produce

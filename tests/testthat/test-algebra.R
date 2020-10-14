@@ -222,7 +222,6 @@ test_that('goedel residuum', {
 })
 
 
-
 test_that('lukasiewicz residuum', {
     expect_that(lukas.residuum(c(0, 0.2, 0.8, 1), 1), equals(c(1, 1, 1, 1)))
     expect_that(lukas.residuum(c(0, 0.2, 0.8, 1), 0), equals(c(1, 0.8, 0.2, 0)))
@@ -236,6 +235,30 @@ test_that('goguen residuum', {
     expect_that(goguen.residuum(c(0, 0.2, 0.8, 1), 0), equals(c(1, 0, 0, 0)))
     expect_that(goguen.residuum(c(0, 0.2, 0.8, 1), 0.5), equals(c(1, 1, 0.625, 0.5)))
     expect_that(goguen.residuum(c(0, 0.2, 0.8, 1), c(0.3, 0.9)), equals(c(1, 1, 0.375, 0.9)))
+})
+
+
+test_that('goedel bi-residuum', {
+    expect_that(goedel.biresiduum(c(0, 0.2, 0.8, 1), 1), equals(c(0, 0.2, 0.8, 1)))
+    expect_that(goedel.biresiduum(c(0, 0.2, 0.8, 1), 0), equals(c(1, 0, 0, 0)))
+    expect_that(goedel.biresiduum(c(0, 0.2, 0.8, 1), 0.5), equals(c(0, 0.2, 0.5, 0.5)))
+    expect_that(goedel.biresiduum(c(0, 0.2, 0.8, 1), c(0.3, 0.9)), equals(c(0, 0.2, 0.3, 0.9)))
+})
+
+
+test_that('lukasiewicz bi-residuum', {
+    expect_that(lukas.biresiduum(c(0, 0.2, 0.8, 1), 1), equals(c(0, 0.2, 0.8, 1)))
+    expect_that(lukas.biresiduum(c(0, 0.2, 0.8, 1), 0), equals(c(1, 0.8, 0.2, 0)))
+    expect_that(lukas.biresiduum(c(0, 0.2, 0.8, 1), 0.5), equals(c(0.5, 0.7, 0.7, 0.5)))
+    expect_that(lukas.biresiduum(c(0, 0.2, 0.8, 1), c(0.3, 0.9)), equals(c(0.7, 0.3, 0.5, 0.9)))
+})
+
+
+test_that('goguen bi-residuum', {
+    expect_that(goguen.biresiduum(c(0, 0.2, 0.8, 1), 1), equals(c(0, 0.2, 0.8, 1)))
+    expect_that(goguen.biresiduum(c(0, 0.2, 0.8, 1), 0), equals(c(1, 0, 0, 0)))
+    expect_that(goguen.biresiduum(c(0, 0.2, 0.8, 1), 0.5), equals(c(0, 2/5, 5/8, 0.5)))
+    expect_that(goguen.biresiduum(c(0, 0.2, 0.8, 1), c(0.3, 0.9)), equals(c(0, 2/9, 3/8, 0.9)))
 })
 
 
@@ -299,7 +322,13 @@ test_that('strict negation', {
 
 
 test_that('algebra', {
-  a <- algebra('goedel')
+  o <- c(0.5, 1, 0, 0.8, NA, 0.3)
+  oi <- c(3, 6, 1, 4, 2, 5)
+  od <- c(2, 4, 1, 6, 3, 5)
+
+  a <- algebra('goe')
+  expect_true(inherits(a, 'algebra'))
+  expect_true(inherits(a, 'list'))
   expect_true(is.algebra(a))
   expect_that(a$t, equals(goedel.tnorm))
   expect_that(a$pt, equals(pgoedel.tnorm))
@@ -308,12 +337,18 @@ test_that('algebra', {
   expect_that(a$r, equals(goedel.residuum))
   expect_that(a$b, equals(goedel.biresiduum))
   expect_that(a$n, equals(strict.neg))
+  expect_that(a$ni, equals(invol.neg))
   expect_that(a$s, equals(goedel.tconorm))
   expect_that(a$ps, equals(pgoedel.tconorm))
   expect_that(a$i, equals(goedel.tnorm))
   expect_that(a$pi, equals(pgoedel.tnorm))
+  expect_that(a$algebratype, equals('goedel'))
+  expect_equal(a$order(o), oi)
+  expect_equal(a$order(o, decreasing=TRUE), od)
 
   a <- algebra('lukas')
+  expect_true(inherits(a, 'algebra'))
+  expect_true(inherits(a, 'list'))
   expect_true(is.algebra(a))
   expect_that(a$t, equals(lukas.tnorm))
   expect_that(a$pt, equals(plukas.tnorm))
@@ -322,12 +357,18 @@ test_that('algebra', {
   expect_that(a$r, equals(lukas.residuum))
   expect_that(a$b, equals(lukas.biresiduum))
   expect_that(a$n, equals(invol.neg))
+  expect_that(a$ni, equals(invol.neg))
   expect_that(a$s, equals(goedel.tconorm))
   expect_that(a$ps, equals(pgoedel.tconorm))
   expect_that(a$i, equals(goedel.tnorm))
   expect_that(a$pi, equals(pgoedel.tnorm))
+  expect_that(a$algebratype, equals('lukasiewicz'))
+  expect_equal(a$order(o), oi)
+  expect_equal(a$order(o, decreasing=TRUE), od)
 
-  a <- algebra('goguen')
+  a <- algebra('gog')
+  expect_true(inherits(a, 'algebra'))
+  expect_true(inherits(a, 'list'))
   expect_true(is.algebra(a))
   expect_that(a$t, equals(goguen.tnorm))
   expect_that(a$pt, equals(pgoguen.tnorm))
@@ -336,8 +377,12 @@ test_that('algebra', {
   expect_that(a$r, equals(goguen.residuum))
   expect_that(a$b, equals(goguen.biresiduum))
   expect_that(a$n, equals(strict.neg))
+  expect_that(a$ni, equals(invol.neg))
   expect_that(a$s, equals(goedel.tconorm))
   expect_that(a$ps, equals(pgoedel.tconorm))
   expect_that(a$i, equals(goedel.tnorm))
   expect_that(a$pi, equals(pgoedel.tnorm))
+  expect_that(a$algebratype, equals('goguen'))
+  expect_equal(a$order(o), oi)
+  expect_equal(a$order(o, decreasing=TRUE), od)
 })

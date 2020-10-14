@@ -2,8 +2,11 @@
 % Please edit documentation in R/algebraNA.R
 \name{sobocinski}
 \alias{sobocinski}
+\alias{algebraNA}
 \alias{kleene}
 \alias{dragonfly}
+\alias{nelson}
+\alias{lowerEst}
 \title{Modify algebra's way of computing with \code{NA} values.}
 \usage{
 sobocinski(algebra)
@@ -11,6 +14,10 @@ sobocinski(algebra)
 kleene(algebra)
 
 dragonfly(algebra)
+
+nelson(algebra)
+
+lowerEst(algebra)
 }
 \arguments{
 \item{algebra}{the underlying algebra object to be modified -- see the \code{\link[=algebra]{algebra()}} function}
@@ -22,11 +29,12 @@ A list of function of the same structure as is the list returned from the \code{
 By default, the objects created with the \code{\link[=algebra]{algebra()}} function represent a mathematical
 algebra capable to work on the \eqn{[0,1]} interval. If \code{NA} appears as a value instead,
 it is propagated to the result. That is, any operation with \code{NA} results in \code{NA}, by default.
-This scheme of handling missing values is also known as Bochvar's.
+This scheme of handling missing values is also known as Bochvar's. To change this default
+behavior, the following functions may be applied.
 }
 \details{
-The \code{sobocinski()}, \code{kleene()} and \code{dragonfly()} functions modify the algebra to
-handle the \code{NA} in a different way than default. Sobocinski's algebra simply ignores \code{NA} values
+The \code{sobocinski()}, \code{kleene()}, \code{nelson()}, \code{lowerEst()} and \code{dragonfly()} functions modify the algebra to
+handle the \code{NA} in a different way than is the default. Sobocinski's algebra simply ignores \code{NA} values
 whereas Kleene's algebra treats \code{NA} as "unknown value". Dragonfly approach is a combination
 of Sobocinski's and Bochvar's approach, which preserves the ordering \verb{0 <= NA <= 1}
 to obtain from compositions (see \code{\link[=compose]{compose()}})

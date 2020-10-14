@@ -22,6 +22,14 @@
     }
 }
 
+.mustBeLogicalScalar <- function(x) {
+    if (!isTRUE(is.vector(x) && is.logical(x) && identical(length(x), 1L))) {
+        stop(paste0(as.list(sys.call(-1))[[1]],
+                    ": '", deparse(substitute(x)), "' must be a logical vector of size 1"),
+             call.=FALSE)
+    }
+}
+
 .mustBeInInterval <- function(x, a, b) {
     if (!isTRUE(all(x >= a & x <= b))) {
         stop(paste0(as.list(sys.call(-1))[[1]],
@@ -98,6 +106,14 @@
     if (!isTRUE(stats::is.ts(x))) {
         stop(paste0(as.list(sys.call(-1))[[1]],
                     ": '", deparse(substitute(x)), "' must be a time series object"),
+             call.=FALSE)
+    }
+ }
+
+.mustBeAlgebra <- function(x) {
+    if (!isTRUE(is.algebra(x))) {
+        stop(paste0(as.list(sys.call(-1))[[1]],
+                    ": '", deparse(substitute(x)), "' must be the algebra object"),
              call.=FALSE)
     }
  }

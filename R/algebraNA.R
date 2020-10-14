@@ -12,16 +12,19 @@
 }
 
 
-.algebraModification <- function(algebra, norm, conorm, resid, neg) {
+.algebraModification <- function(call, algebra, norm, conorm, resid, neg, invol, ord) {
     resN <- neg(algebra$n)
+    resNI <- invol(algebra$ni)
     resT <- norm(algebra$t)
     resPT <- .elementWisely(resT)
     resC <- conorm(algebra$c)
     resR <- resid(algebra$r)
-    resB <- function(x, y) { resPT(resR(x, y), resR(y, x)) }
     resI <- norm(algebra$i)
+    resPI <- .elementWisely(resI)
     resS <- conorm(algebra$s)
-    return(list(n=resN,
+    resB <- function(x, y) { resPI(resR(x, y), resR(y, x)) }
+    res <- list(n=resN,
+                ni=resNI,
                 t=resT,
                 pt=resPT,
                 c=resC,
@@ -29,9 +32,100 @@
                 r=resR,
                 b=resB,
                 i=resI,
-                pi=.elementWisely(resI),
+                pi=resPI,
                 s=resS,
-                ps=.elementWisely(resS)))
+                ps=.elementWisely(resS),
+                order=ord,
+                algebratype=c(algebra$algebratype, call))
+    class(res) <- c('algebra', 'list')
+    res
+}
+
+
+.neg0 <- function(f) {
+    return(function(x) {
+        res <- f(x)
+        res[is.na(x)] <- 0
+        res
+    })
+}
+
+
+.neg1 <- function(f) {
+    return(function(x) {
+        res <- f(x)
+        res[is.na(x)] <- 1
+        res
+    })
+}
+
+
+.negNA <- function(f) {
+    return(function(x) {
+        res <- f(x)
+        res[is.na(x)] <- NA_real_
+        res
+    })
+}
+
+
+.normKleene <- function(f) {
+    return(function(...) {
+        dots <- c(...)
+        nonadots <- na.omit(dots)
+        res <- f(nonadots)
+        if (length(dots) != length(nonadots) && !is.na(res) && res > 0) {
+            return(NA_real_)
+        }
+        res
+    })
+}
+
+
+.conormKleene <- function(f) {
+    return(function(...) {
+        dots <- c(...)
+        nonadots <- na.omit(dots)
+        res <- f(nonadots)
+        if (length(dots) != length(nonadots) && !is.na(res) && res < 1) {
+            return(NA_real_)
+        }
+        res
+    })
+}
+
+
+.conormDragon <- function(f) {
+    return(function(...) {
+        dots <- c(...)
+        nonadots <- na.omit(dots)
+        res <- f(nonadots)
+        if (length(dots) != length(nonadots) && !is.na(res) && res == 0) {
+            return(NA_real_)
+        }
+        res
+    })
+}
+
+
+.undefinedOrder <- function(x, decreasing=FALSE) {
+    stop('Cannot complete the computation, "order" is unimplemented for the algebra.')
+}
+
+
+.dragonflyOrder <- function(x, decreasing=FALSE) {
+    large <- sum(!is.na(x) & x > 0)
+    zeros <- sum(!is.na(x) & x == 0)
+    nas <- sum(is.na(x))
+    ordered <- order(x, decreasing=TRUE, na.last=TRUE)
+    res <- c(ordered[seq(from=1, length.out=large)],
+             ordered[seq(from=large + zeros + 1, length.out=nas)],
+             ordered[seq(from=large + 1, length.out=zeros)])
+    if (decreasing) {
+        return(res)
+    } else {
+        return(rev(res))
+    }
 }
 
 
@@ -40,10 +134,11 @@
 #' By default, the objects created with the [algebra()] function represent a mathematical
 #' algebra capable to work on the \eqn{[0,1]} interval. If `NA` appears as a value instead,
 #' it is propagated to the result. That is, any operation with `NA` results in `NA`, by default.
-#' This scheme of handling missing values is also known as Bochvar's.
+#' This scheme of handling missing values is also known as Bochvar's. To change this default
+#' behavior, the following functions may be applied.
 #'
-#' The `sobocinski()`, `kleene()` and `dragonfly()` functions modify the algebra to
-#' handle the `NA` in a different way than default. Sobocinski's algebra simply ignores `NA` values
+#' The `sobocinski()`, `kleene()`, `nelson()`, `lowerEst()` and `dragonfly()` functions modify the algebra to
+#' handle the `NA` in a different way than is the default. Sobocinski's algebra simply ignores `NA` values
 #' whereas Kleene's algebra treats `NA` as "unknown value". Dragonfly approach is a combination
 #' of Sobocinski's and Bochvar's approach, which preserves the ordering `0 <= NA <= 1`
 #' to obtain from compositions (see [compose()])
@@ -140,60 +235,41 @@
 #'
 #' @export
 #' @importFrom stats na.omit
+#' @rdname algebraNA
+#' @aliases algebraNA
 sobocinski <- function(algebra) {
-    neg <- function(f) {
-        return(function(x) {
-            res <- f(x)
-            res[is.na(x)] <- 0
-            res
-        })
-    }
+    .mustBeAlgebra(algebra)
 
     norm <- function(f) {
         return(function(...) {
-            f(na.omit(c(...)))
+            nonadots <- na.omit(c(...))
+            if (length(nonadots) <= 0) {
+                return(NA_real_)
+            }
+            f(nonadots)
         })
     }
 
     resid <- function(f) {
         return(function(x, y) {
             res <- f(x, y)
-            naX <- is.na(x)
-            naY <- is.na(y)
-            res[naY] <- algebra$n(x[naY])
-            res[naX] <- y[naX]
+            xNA <- is.na(x)
+            yNA <- is.na(y)
+            res[yNA] <- algebra$n(x[yNA])
+            res[xNA] <- y[xNA]
+            res[xNA & yNA] <- NA_real_
             res
         })
     }
 
-    .algebraModification(algebra, norm, norm, resid, neg)
+    .algebraModification('sobocinski', algebra, norm, norm, resid, .neg0, .negNA, .undefinedOrder)
 }
 
 
 #' @export
-#' @rdname sobocinski
+#' @rdname algebraNA
 kleene <- function(algebra) {
-    norm <- function(f) {
-        return(function(...) {
-            dots <- c(...)
-            res <- f(na.omit(dots))
-            if (!is.na(res) && res > 0 && any(is.na(dots))) {
-                return(NA_real_)
-            }
-            return(res)
-        })
-    }
-
-    conorm <- function(f) {
-        return(function(...) {
-            dots <- c(...)
-            res <- f(na.omit(dots))
-            if (!is.na(res) && res < 1 && any(is.na(dots))) {
-                return(NA_real_)
-            }
-            return(res)
-        })
-    }
+    .mustBeAlgebra(algebra)
 
     resid <- function(f) {
         return(function(x, y) {
@@ -206,50 +282,79 @@ kleene <- function(algebra) {
         })
     }
 
-    .algebraModification(algebra, norm, conorm, resid, identity)
+    .algebraModification('kleene', algebra, .normKleene, .conormKleene, resid, .negNA, .negNA, .undefinedOrder)
 }
 
 
 #' @export
-#' @rdname sobocinski
+#' @rdname algebraNA
 dragonfly <- function(algebra) {
-    norm <- function(f) {
-        return(function(...) {
-            dots <- c(...)
-            res <- f(na.omit(dots))
-            if (!is.na(res) && res > 0 && any(is.na(dots))) {
-                return(NA_real_)
-            }
-            return(res)
-        })
-    }
-
-    conorm <- function(f) {
-        return(function(...) {
-            dots <- c(...)
-            res <- f(na.omit(dots))
-            if (!is.na(res) && res == 0 && any(is.na(dots))) {
-                return(NA_real_)
-            }
-            return(res)
-        })
-    }
+    .mustBeAlgebra(algebra)
 
     resid <-function(f) {
         return(function(x, y) {
             res <- f(x, y)
-            naX <- is.na(x)
-            naY <- is.na(y)
-            res[naX] <- y[naX]
-            res[naY] <- NA_real_
-            res[naX & naY] <- 1
-            res[naY & x == 0] <- 1
-            res[naX & y == 0] <- NA_real_
+            xNA <- is.na(x)
+            yNA <- is.na(y)
+            x0 <- !xNA & x == 0
+            y0 <- !yNA & y == 0
+            res[xNA] <- y[xNA]
+            res[yNA] <- NA_real_
+            res[xNA & yNA] <- 1
+            res[yNA & x0] <- 1
+            res[xNA & y0] <- NA_real_
             return(res)
         })
     }
 
-    alg <- .algebraModification(algebra, norm, conorm, resid, identity)
-    alg$b <- function(x, y) { stop('dragonfly bi-residuum not implemented') }
+    alg <- .algebraModification('dragonfly', algebra, .normKleene, .conormDragon, resid, .negNA, .negNA, .dragonflyOrder)
+    return(alg)
+}
+
+
+#' @export
+#' @rdname algebraNA
+nelson <- function(algebra) {
+    .mustBeAlgebra(algebra)
+
+    resid <- function(f) {
+        return(function(x, y) {
+            res <- f(x, y)
+            xNA <- is.na(x)
+            yNA <- is.na(y)
+            x0 <- !xNA & x == 0
+            y0 <- !yNA & y == 0
+            y1 <- !yNA & y == 1
+            res[yNA] <- NA_real_
+            res[x0 & yNA] <- 1
+            res[xNA] <- 1
+            res[xNA & !(y0 | y1 | yNA)] <- NA_real_
+            res
+        })
+    }
+
+    .algebraModification('nelson', algebra, .normKleene, .conormKleene, resid, .neg1, .negNA, .undefinedOrder)
+}
+
+
+#' @export
+#' @rdname algebraNA
+lowerEst <- function(algebra) {
+    .mustBeAlgebra(algebra)
+
+    resid <-function(f) {
+        return(function(x, y) {
+            res <- f(x, y)
+            xNA <- is.na(x)
+            yNA <- is.na(y)
+            x0 <- !xNA & x == 0
+            res[yNA] <- NA_real_
+            res[yNA & x0] <- 1
+            res[xNA] <- y[xNA]
+            res
+        })
+    }
+
+    alg <- .algebraModification('lowerEst', algebra, .normKleene, .conormDragon, resid, .neg0, .negNA, .dragonflyOrder)
     return(alg)
 }

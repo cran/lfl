@@ -30,12 +30,12 @@
 #'
 #' Let \eqn{a}, \eqn{b} be values from the interval \eqn{[0, 1]}. The realized functions
 #' can be defined as follows:
-#' * Goedel t-norm: \eqn{min\{a, b\}};
+#' * Goedel t-norm: \eqn{min{a, b}};
 #' * Goguen t-norm: \eqn{ab};
-#' * Lukasiewicz t-norm: \eqn{max\{0, a+b-1\}};
-#' * Goedel t-conorm: \eqn{max\{a, b\}};
+#' * Lukasiewicz t-norm: \eqn{max{0, a+b-1}};
+#' * Goedel t-conorm: \eqn{max{a, b}};
 #' * Goguen t-conorm: \eqn{a+b-ab};
-#' * Lukasiewicz t-conorm: \eqn{min\{1, a+b\}};
+#' * Lukasiewicz t-conorm: \eqn{min{1, a+b}};
 #' * Goedel residuum (standard Goedel implication): \eqn{1} if \eqn{a \le b} and
 #'   \eqn{b} otherwise;
 #' * Goguen residuum (implication): \eqn{1} if \eqn{a \le b} and \eqn{b/a}
@@ -45,45 +45,57 @@
 #' * Involutive negation: \eqn{1-x};
 #' * Strict negation: \eqn{1} if \eqn{x=0} and \eqn{0} otherwise.
 #'
-#' Bi-residuum \eqn{B} is derived from t-norm \eqn{T} and residuum \eqn{R}
-#' as follows: \deqn{B(a, b) = T(R(a, b), R(b, a)).}
+#' Bi-residuum \eqn{B} is derived from residuum \eqn{R}
+#' as follows: \deqn{B(a, b) = inf(R(a, b), R(b, a)),}
+#' where \eqn{inf} is the operation of infimum, which for all three algebras
+#' corresponds to the \eqn{min} operation.
 #'
 #' The arguments have to be numbers from the interval \eqn{[0, 1]}. Values
 #' outside that range cause an error. NaN values are treated as NAs.
 #'
-#' If some argument is NA or NaN, the result is NA.
+#' If some argument is NA or NaN, the result is NA. For other handling of missing values,
+#' see [algebraNA].
 #'
-#' `algebra` returns a named list of functions that together form Goedel,
-#' Goguen, or Lukasiewicz algebra:
-#' * `"goedel"`: strict negation and Goedel t-norm, t-conorm, residuum, and bi-residuum;
-#' * `"goguen"`: strict negation and Goguen t-norm, t-conorm, residuum, and bi-residuum;
-#' * `"lukasiewicz"`: involutive negation and Lukasiewicz t-norm, t-conorm, residuum, and bi-residuum.
-#' Moreover, `algebra` returns supremum and infimum functions computed as maximum and minimum,
+#' Selection of a t-norm may serve as a basis for definition of other operations.
+#' From the t-norm, the operation of a residual implication may be defined, which
+#' in turn allows the definition of a residual negation. If the residual negation
+#' is not involutive, the involutive negation is often added as a new operation
+#' and together with the t-norm can be used to define the t-conorm. Therefore,
+#' the `algebra` function returns a named list of operations derived from the selected
+#' Goedel, Goguen, or Lukasiewicz t-norm. Concretely:
+#' * `algebra("goedel")`: returns the strict negation as the residual negation,
+#'    the involutive negation, and also the Goedel t-norm, t-conorm, residuum, and bi-residuum;
+#' * `algebra("goguen")`: returns the strict negation as the residual negation,
+#'    the involutive negation, and also the Goguen t-norm, t-conorm, residuum, and bi-residuum;
+#' * `algebra("lukasiewicz")`: returns involutive negation as both residual and involutive
+#'    negation, and also the Lukasiewicz t-norm, t-conorm, residuum, and bi-residuum.
+#'
+#' Moreover, `algebra` returns the supremum and infimum functions computed as maximum and minimum,
 #' respectively.
 #'
 #' `is.algebra` tests whether the given `a` argument is a valid
 #' algebra, i.e. a list returned by the `algebra` function.
 #'
+#' @param name The name of the algebra to be created. Must be one of: "goedel",
+#' "lukasiewicz", "goguen" (or an unambiguous abbreviation).
+#' @param stdneg (Deprecated.) `TRUE` if to force the use of a "standard" negation (i.e.
+#' involutive negation).  Otherwise, the appropriate negation is used in the
+#' algebra (e.g. strict negation in Goedel and Goguen algebra and involutive
+#' negation in Lukasiewicz algebra).
 #' @param ...  For t-norms and t-conorms, these arguments are numeric vectors
 #' of values to compute t-norms or t-conorms from.  Values outside the
 #' \eqn{[0,1]} interval cause an error. NA values are also permitted.
 #'
 #' For the `algebra()` function, these arguments are passed to the factory
 #' functions that create the algebra. (Currently unused.)
+#' @param a An object to be checked if it is a valid algebra (i.e. a list
+#' returned by the `algebra` function).
 #' @param x Numeric vector of values to compute a residuum or bi-residuum from.
 #' Values outside the \eqn{[0,1]} interval cause an error. NA values are also
 #' permitted.
 #' @param y Numeric vector of values to compute a residuum or bi-residuum from.
 #' Values outside the \eqn{[0,1]} interval cause an error. NA values are also
 #' permitted.
-#' @param name The name of the algebra to be created. Must be one of: "goedel",
-#' "lukasiewicz", "goguen" (or an unambiguous abbreviation).
-#' @param stdneg `TRUE` if to force the use of a "standard" negation (i.e.
-#' involutive negation).  Otherwise, the appropriate negation is used in the
-#' algebra (e.g. strict negation in Goedel and Goguen algebra and involutive
-#' negation in Lukasiewicz algebra).
-#' @param a An object to be checked if it is a valid algebra (i.e. a list
-#' returned by the `algebra` function).
 #' @return Functions for t-norms and t-conorms (such as `goedel.tnorm`)
 #' return a numeric vector of size 1 that is the result of the appropriate
 #' t-norm or t-conorm applied on all values of all arguments.
@@ -101,11 +113,20 @@
 #' numeric vector of the same size as the argument `x`.
 #'
 #' `algebra` returns a list of functions of the requested algebra:
-#' `"n"` (negation), `"t"` (t-norm), `"pt"` (element-wise t-norm),
+#' `"n"` (residual negation), `"ni"` (involutive negation), `"t"` (t-norm),
+#' `"pt"` (element-wise t-norm),
 #' `"c"` (t-conorm), `"pc"` (element-wise t-conorm), `"r"` (residuum),
 #' `"b"` (bi-residuum), `"s"` (supremum),
 #' `"ps"` (element-wise supremum), `"i"` (infimum), and
 #' `"pi"` (element-wise infimum).
+#'
+#' For Lukasiewicz algebra, the elements `"n"` and `"ni"` are the same, i.e.
+#' the `invol.neg` function. For Goedel and Goguen algebra, `"n"` (the residual
+#' negation) equals `strict.neg` and `"ni"` (the involutive negation) equals
+#' `invol.neg`.
+#'
+#' `"s"`, `"ps"`, `"i"`, `"pi"` are the same for each type of algebra:
+#' `goedel.conorm`, `pgoedel.conorm`, `goedel.tnorm`, and `pgoedel.tnorm`.
 #'
 #' @author Michal Burda
 #' @keywords models robust
@@ -118,7 +139,8 @@
 #'     x <- runif(10)
 #'     y <- runif(10)
 #'     a <- algebra('goedel')
-#'     a$n(x)     # negation
+#'     a$n(x)     # residual negation
+#'     a$ni(x)    # involutive negation
 #'     a$t(x, y)  # t-norm
 #'     a$pt(x, y) # element-wise t-norm
 #'     a$c(x, y)  # t-conorm
@@ -133,12 +155,37 @@
 #'     is.algebra(a) # TRUE
 #' @export
 algebra <- function(name, stdneg=FALSE, ...) {
+    if (stdneg) {
+      .Deprecated('algebra',
+                  msg=paste('The "stdneg" argument is deprecated. If you need',
+                            'the involutive negation, use the "ni" function',
+                            'returned in list by the algebra() function.'))
+    }
     name <- match.arg(name, names(.algebras))
     res <- .algebras[[name]](...)
     if (stdneg) {
         res[['n']] <- invol.neg
     }
+    class(res) <- c('algebra', 'list')
+    res$algebratype <- name
     return(res)
+}
+
+
+#' Print an instance of the [algebra()] S3 class in a human readable form.
+#'
+#' @param x An instance of the [algebra()] S3 class
+#' @param ...  Unused.
+#' @return None.
+#' @author Michal Burda
+#' @seealso [algebra()]
+#' @keywords models robust
+#' @export
+#' @importFrom utils str
+print.algebra <- function(x, ...) {
+  cat('Algebra:', paste0(x$algebratype, collapse='/'), '\n')
+  x$algebratype <- NULL
+  str(x, give.attr=FALSE, no.list=TRUE)
 }
 
 
@@ -146,7 +193,9 @@ algebra <- function(name, stdneg=FALSE, ...) {
 #' @export
 is.algebra <- function(a) {
   return(is.list(a) &&
+           inherits(a, 'algebra') &&
            is.function(a$n) &&
+           is.function(a$ni) &&
            is.function(a$t) &&
            is.function(a$pt) &&
            is.function(a$c) &&
@@ -156,7 +205,8 @@ is.algebra <- function(a) {
            is.function(a$s) &&
            is.function(a$ps) &&
            is.function(a$i) &&
-           is.function(a$pi))
+           is.function(a$pi) &&
+           is.function(a$order))
 }
 
 
@@ -282,13 +332,13 @@ goedel.biresiduum <- function(x, y) {
 #' @rdname algebra
 #' @export
 lukas.biresiduum <- function(x, y) {
-    plukas.tnorm(lukas.residuum(x, y), lukas.residuum(y, x))
+    pgoedel.tnorm(lukas.residuum(x, y), lukas.residuum(y, x))
 }
 
 #' @rdname algebra
 #' @export
 goguen.biresiduum <- function(x, y) {
-    pgoguen.tnorm(goguen.residuum(x, y), goguen.residuum(y, x))
+    pgoedel.tnorm(goguen.residuum(x, y), goguen.residuum(y, x))
 }
 
 
@@ -344,8 +394,13 @@ strict.neg <- function(x) {
                    goedel=strict.neg,
                    goguen=strict.neg)
 
+.defaultOrder <- function(x, decreasing=FALSE) {
+  order(x, decreasing=decreasing)
+}
+
 .algebras <- list('goedel'=function(...) {
                         list(n=strict.neg,
+                             ni=invol.neg,
                              t=goedel.tnorm,
                              pt=pgoedel.tnorm,
                              c=goedel.tconorm,
@@ -355,10 +410,12 @@ strict.neg <- function(x) {
                              i=goedel.tnorm,
                              pi=pgoedel.tnorm,
                              s=goedel.tconorm,
-                             ps=pgoedel.tconorm)
+                             ps=pgoedel.tconorm,
+                             order=.defaultOrder)
                   },
                   'lukasiewicz'=function(...) {
                         list(n=invol.neg,
+                             ni=invol.neg,
                              t=lukas.tnorm,
                              pt=plukas.tnorm,
                              c=lukas.tconorm,
@@ -368,10 +425,12 @@ strict.neg <- function(x) {
                              i=goedel.tnorm,
                              pi=pgoedel.tnorm,
                              s=goedel.tconorm,
-                             ps=pgoedel.tconorm)
+                             ps=pgoedel.tconorm,
+                             order=.defaultOrder)
                   },
                   'goguen'=function(...) {
                         list(n=strict.neg,
+                             ni=invol.neg,
                              t=goguen.tnorm,
                              pt=pgoguen.tnorm,
                              c=goguen.tconorm,
@@ -381,5 +440,6 @@ strict.neg <- function(x) {
                              i=goedel.tnorm,
                              pi=pgoedel.tnorm,
                              s=goedel.tconorm,
-                             ps=pgoedel.tconorm)
+                             ps=pgoedel.tconorm,
+                             order=.defaultOrder)
                    })

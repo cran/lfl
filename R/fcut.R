@@ -26,7 +26,7 @@
 #' by the `type` argument that may be equal either to a string
 #' `'triangle'` or `'raisedcos'` or it could be a function that
 #' computes the membership degrees for itself (see [triangular()] or
-#' [raisedcosinal()] functions for details). Additionally, super-sets of
+#' [raisedcosine()] functions for details). Additionally, super-sets of
 #' these elementary sets may be created by specifying the `merge`
 #' argument. Values of this argument specify how many consecutive fuzzy sets
 #' should be combined (by using the Lukasiewic's t-conorm) to produce
@@ -52,7 +52,7 @@
 #'
 #' If considering an i-th fuzzy set (of `type='triangle'`), `x`
 #' values lower than \eqn{i}-th break (and greater than \eqn{(i+2)}-th break)
-#' would result in zero memberhsip degree, values equal to \eqn{(i+1)}-th break
+#' would result in zero membership degree, values equal to \eqn{(i+1)}-th break
 #' would have membership degree equal 1 and values between them the appropriate
 #' membership degree between 0 and 1.
 #'
@@ -60,7 +60,7 @@
 #' dot (".") and a number \eqn{i} of fuzzy set.
 #'
 #' Unlike [base::cut()], `x` values, that are lower or greater than
-#' the given break-points, will have all memberhsip degrees equal to zero.
+#' the given break-points, will have all membership degrees equal to zero.
 #'
 #' For non-numeric data, this argument is ignored. For `x` being a numeric
 #' vector, it must be a vector of numeric values. For `x` being a numeric
@@ -77,7 +77,7 @@
 #' membership degrees from values of the first argument while considering
 #' the boundaries given by the next 3 arguments;
 #' * if `type` is a 3-argument function, it is assumed that it is a factory
-#' function similar to [triangular()] or [raisedcosinal()], which, from given
+#' function similar to [triangular()] or [raisedcosine()], which, from given
 #' three boundaries, creates a function that computes membership degrees.
 #' @param merge This argument determines whether to derive additional fuzzy
 #' sets by merging the elementary fuzzy sets (whose position is determined with
@@ -235,7 +235,7 @@ fcut.numeric <- function(x,
         if (type == 'triangle') {
             func <- triangular
         } else {
-            func <- raisedcosinal
+            func <- raisedcosine
         }
     }
     if (length(names(formals(func))) == 3L) {
