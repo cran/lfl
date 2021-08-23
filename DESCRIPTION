@@ -1,8 +1,8 @@
 Package: lfl
 Type: Package
 Title: Linguistic Fuzzy Logic
-Version: 2.1.1
-Date: 2020-11-03
+Version: 2.1.2
+Date: 2021-08-23
 Authors@R: 
     person(given = "Michal",
            family = "Burda",
@@ -14,7 +14,7 @@ Description: Various algorithms related to linguistic fuzzy logic: mining for li
     rules, composition of fuzzy relations, performing perception-based logical deduction (PbLD), 
     and forecasting time-series using fuzzy rule-based ensemble (FRBE).
 License: GPL-3
-Suggests: testthat, doMC, knitr, rmarkdown
+Suggests: testthat, doMC, knitr, rmarkdown, R.rsp
 Depends: R (>= 3.6)
 Imports: Rcpp (>= 0.12.12), foreach, forecast (>= 5.5), plyr, tseries,
         e1071, zoo
@@ -24,7 +24,8 @@ SystemRequirements: C++11
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 Language: en-US
-Packaged: 2020-11-03 18:40:00 UTC; michal
+VignetteBuilder: R.rsp
+Packaged: 2021-08-23 09:15:32 UTC; michal
 Author: Michal Burda [aut, cre] (<https://orcid.org/0000-0002-4182-4407>)
 Repository: CRAN
-Date/Publication: 2020-11-04 16:20:05 UTC
+Date/Publication: 2021-08-23 13:40:02 UTC

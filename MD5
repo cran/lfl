@@ -1,10 +1,10 @@
-f9ee6a2d49cdfcfdd37fc3188e4a869b *DESCRIPTION
+22712c13a5967551ab38fa62b07e0839 *DESCRIPTION
 262fd56eaedfeeb8b549321ee799b28f *NAMESPACE
-6005b17e542827a06b289dd41f4f129e *NEWS.md
+8382a37aae4ca9cd33ad6c6858c0b2de *NEWS.md
 14aab3cb64a22dda2f9981366b7f2f96 *R/RcppExports.R
-ca61d6d9c9b591ee93d68207399c4eaa *R/aggregateConsequents.R
+effd13e0fdf254dfdba2c265cc5768a9 *R/aggregateConsequents.R
 1127e95f8b942ac66fa5f1a011dcf3ec *R/algebra.R
-81d8b1475b1eacadca1e36c5d555ed43 *R/algebraNA.R
+1bcac2332d64997bf2c0b79d6c645e3a *R/algebraNA.R
 6eb0248890233abc7e9e39b029a47978 *R/antecedents.R
 9c84dae9651eff9cd628cc19844d7bdc *R/compose.R
 4c76d270f10bb9e08aeb6ba549aae09a *R/consequents.R
@@ -33,7 +33,7 @@ a590b93be422b6eee9b0ad73f77eff43 *R/pbld.R
 09df9be8ee8fd76df3fa5bbc480d465e *R/perceive.R
 dffe6fd5253b26617e5f9881e9622454 *R/print.ctx.R
 22807e6358d4e1f03624542302d656f8 *R/print.frbe.R
-2e549f994e3f4884bf720e07719012f4 *R/quantifier.R
+5f1705e0289899dbc07c6b35f5628a64 *R/quantifier.R
 aa514cea4362cba3fa3f57dc365272e4 *R/rbcoverage.R
 7d8da3110f55c7f21dc4ee1eeb6e8828 *R/reduce.R
 cbb4022c555ea6c9ddb199b3275eec2d *R/rmse.R
@@ -43,13 +43,16 @@ b9b2cd9ac403405a99c7b65d1ef1aaf2 *R/smape.R
 afdb783fb0e88f8cf2a0fabbed55ee9a *R/sugeno.R
 b38b5d6cc0012f7e39a512e06676138d *R/testers.R
 0b6fc7dd73ac40263eb149f83348fc2e *README.md
+f821efad12b9caca207ba84964102bd6 *build/vignette.rds
 58eea55f9001324c84ba71165647786c *cleanup
 2e16482840a45954e19d808b11f34e74 *configure
 ef3ee989bfa4e0712f9ff975fed2c8a9 *configure.ac
-64ac8525ffa5adbf4cbf8925c0033eba *inst/CITATION
-75ed0576a106e72019c75cba4dff0b2b *man/aggregateConsequents.Rd
+feec4ef25976e4a1fecea9c2aeed386d *inst/CITATION
+187ebdcd06ce3c4a78c11a58d0dbc244 *inst/doc/main.pdf
+c8e6c85528a35d6e8f85f4b5b0b30e16 *inst/doc/main.pdf.asis
+f1c3957950a52564267dbba321e34c14 *man/aggregateConsequents.Rd
 b971a6033f19034f1b9a7fa918db5d33 *man/algebra.Rd
-202f3747888469f1e22f2b045761d2e6 *man/algebraNA.Rd
+edf96eb21ac05a38875e7ecc0348422c *man/algebraNA.Rd
 01c961a8315dae00c8e40a4492e46735 *man/antecedents.Rd
 57a555c7c57edf3ab6bcb1883ce49ce9 *man/as.data.frame.farules.Rd
 ca2cc21921d67aabae82e3eb1e9f6904 *man/as.data.frame.fsets.Rd
@@ -86,7 +89,7 @@ fc33cf835485b75a3f7fa77779365121 *man/plot.fsets.Rd
 1d2cd0b4476d760b198af50651c5be50 *man/print.farules.Rd
 b8bd8c9ed90fa116d37694be8bc0ec8d *man/print.frbe.Rd
 41495e3cf2fcbc0d4a661ecfe8953573 *man/print.fsets.Rd
-b3fec4edce235b097bbb2cc8adae2301 *man/quantifier.Rd
+5ac8a491013e09c78b712ef72884e804 *man/quantifier.Rd
 66d4b2a253bb8e574c7353ae8fdc9696 *man/rbcoverage.Rd
 6673e320437c4baae811cebe89ea35dc *man/reduce.Rd
 81c7e51532cbbe33bd0fcd867e8b76a9 *man/rmse.Rd
@@ -98,7 +101,7 @@ da7af6a8ece950966b1c3726323e351d *man/smape.Rd
 7ecd1ee07ba90861808ea483079244b0 *man/triangular.Rd
 e43a1cac68b69f05e7957dfd0a1bdcfd *src/Makevars.in
 f41896c4622cd8824f47887be2c0f06b *src/Makevars.win
-da8d2b6950d2088361c311c47ca827dc *src/RcppExports.cpp
+32b7470ea04a5167683905e8eff61b32 *src/RcppExports.cpp
 8dde3eef29a84b05615b23a441f478e4 *src/algebra.cpp
 007148121e2bbdea67886008af81b7da *src/common.h
 dc5ba2fe8a56f653fca84713c1623e34 *src/common/Chain.h
@@ -172,3 +175,4 @@ a1ba6edfcf00f1325087ca88547810f1 *tests/testthat/test-rmse.R
 e30e3d61c94db5d102373e4126833b43 *tests/testthat/test-searchrules.R
 25c38e5c2173f305e6273b8df0549c3b *tests/testthat/test-smape.R
 0a475b3412831396f9c4d5390ce4436e *tests/testthat/test-testers.R
+c8e6c85528a35d6e8f85f4b5b0b30e16 *vignettes/main.pdf.asis
