@@ -11,127 +11,171 @@
 using namespace Rcpp;
 
 
+#define TNORM_IMPL(call) {                                     \
+    if (vals.size() <= 0) {                                    \
+        return NA_REAL;                                        \
+    }                                                          \
+    auto fun = [&vals](int i) { return vals[i]; };             \
+    return call(vals.size(), fun);                             \
+}                                                              \
+
+#define PTNORM_IMPL(call) {                                    \
+    if (list.size() <= 0) {                                    \
+        return NumericVector(0);                               \
+    }                                                          \
+    int size = 0;                                              \
+    for (int j = 0; j < list.size(); ++j) {                    \
+        NumericVector vec = list[j];                           \
+        if (vec.size() > size)                                 \
+            size = vec.size();                                 \
+    }                                                          \
+    NumericVector result(size);                                \
+    for (int j = 0; j < size; ++j) {                           \
+        auto fun = [&list, &j](int i) { NumericVector vec = list[i]; return vec[j % vec.size()]; }; \
+        result[j] = call(list.size(), fun);                    \
+    }                                                          \
+    return result;                                             \
+}
+
+
 inline void testInvalids(double x) {
     if ((x) < 0 || (x) > 1) {
         stop("argument out of range 0..1");
     }
 }
 
-
-// [[Rcpp::export(name=".goedel.tnorm")]]
-double goedel_tnorm(NumericVector vals)
-{
-    if (vals.size() <= 0) {
-        return NA_REAL;
-    }
+inline double internalGoedelTnorm(int size, std::function<double(int)> getValue) {
     double res = 1.0;
-    for (int i = 0; i < vals.size(); ++i) {
-        testInvalids(vals[i]);
-        if (NumericVector::is_na(vals[i])) {
+    for (int i = 0; i < size; ++i) {
+        double v = getValue(i);
+        testInvalids(v);
+        if (NumericVector::is_na(v)) {
             return NA_REAL;
-        } else if (vals[i] < res) {
-            res = vals[i];
+        } else if (v < res) {
+            res = v;
         }
     }
     return res;
 }
 
-
-// [[Rcpp::export(name=".lukas.tnorm")]]
-double lukas_tnorm(NumericVector vals)
-{
-    if (vals.size() <= 0) {
-        return NA_REAL;
-    }
+inline double internalLukasTnorm(int size, std::function<double(int)> getValue) {
     double res = 1.0;
-    for (int i = 0; i < vals.size(); ++i) {
-        testInvalids(vals[i]);
-        if (NumericVector::is_na(vals[i])) {
+    for (int i = 0; i < size; ++i) {
+        double v = getValue(i);
+        testInvalids(v);
+        if (NumericVector::is_na(v)) {
             return NA_REAL;
         } else {
-            res += vals[i];
+            res += v;
         }
     }
-    res -= vals.size();
+    res -= size;
     return res > 0 ? res : 0;
 }
 
-
-// [[Rcpp::export(name=".goguen.tnorm")]]
-double goguen_tnorm(NumericVector vals)
-{
-    if (vals.size() <= 0) {
-        return NA_REAL;
-    }
+inline double internalGoguenTnorm(int size, std::function<double(int)> getValue) {
     double res = 1.0;
-    for (int i = 0; i < vals.size(); ++i) {
-        testInvalids(vals[i]);
-        if (NumericVector::is_na(vals[i])) {
+    for (int i = 0; i < size; ++i) {
+        double v = getValue(i);
+        testInvalids(v);
+        if (NumericVector::is_na(v)) {
             return NA_REAL;
         } else {
-            res = res * vals[i];
+            res = res * v;
         }
     }
     return res;
 }
 
-
-// [[Rcpp::export(name=".goedel.tconorm")]]
-double goedel_tconorm(NumericVector vals)
-{
-    if (vals.size() <= 0) {
-        return NA_REAL;
-    }
+inline double internalGoedelTconorm(int size, std::function<double(int)> getValue) {
     double res = 0.0;
-    for (int i = 0; i < vals.size(); ++i) {
-        testInvalids(vals[i]);
-        if (NumericVector::is_na(vals[i])) {
+    for (int i = 0; i < size; ++i) {
+        double v = getValue(i);
+        testInvalids(v);
+        if (NumericVector::is_na(v)) {
             return NA_REAL;
-        } else if (vals[i] > res) {
-            res = vals[i];
+        } else if (v > res) {
+            res = v;
         }
     }
     return res;
 }
 
-
-// [[Rcpp::export(name=".lukas.tconorm")]]
-double lukas_tconorm(NumericVector vals)
-{
-    if (vals.size() <= 0) {
-        return NA_REAL;
-    }
+inline double internalLukasTconorm(int size, std::function<double(int)> getValue) {
     double res = 0.0;
-    for (int i = 0; i < vals.size(); ++i) {
-        testInvalids(vals[i]);
-        if (NumericVector::is_na(vals[i])) {
+    for (int i = 0; i < size; ++i) {
+        double v = getValue(i);
+        testInvalids(v);
+        if (NumericVector::is_na(v)) {
             return NA_REAL;
         } else {
-            res += vals[i];
+            res += v;
         }
     }
     return res >= 1 ? 1 : res;
 }
 
-
-// [[Rcpp::export(name=".goguen.tconorm")]]
-double goguen_tconorm(NumericVector vals)
-{
-    if (vals.size() <= 0) {
-        return NA_REAL;
-    }
+inline double internalGoguenTconorm(int size, std::function<double(int)> getValue) {
     double res = 0.0;
-    for (int i = 0; i < vals.size(); ++i) {
-        testInvalids(vals[i]);
-        if (NumericVector::is_na(vals[i])) {
+    for (int i = 0; i < size; ++i) {
+        double v = getValue(i);
+        testInvalids(v);
+        if (NumericVector::is_na(v)) {
             return NA_REAL;
         } else {
-            res = res + vals[i] - res * vals[i];
+            res = res + v - res * v;
         }
     }
     return res;
 }
 
+// [[Rcpp::export(name=".goedel.tnorm")]]
+double goedel_tnorm(NumericVector vals)
+{ TNORM_IMPL(internalGoedelTnorm); }
+
+// [[Rcpp::export(name=".pgoedel.tnorm")]]
+NumericVector pgoedel_tnorm(List list)
+{ PTNORM_IMPL(internalGoedelTnorm); }
+
+// [[Rcpp::export(name=".lukas.tnorm")]]
+double lukas_tnorm(NumericVector vals)
+{ TNORM_IMPL(internalLukasTnorm); }
+
+// [[Rcpp::export(name=".plukas.tnorm")]]
+NumericVector plukas_tnorm(List list)
+{ PTNORM_IMPL(internalLukasTnorm); }
+
+// [[Rcpp::export(name=".goguen.tnorm")]]
+double goguen_tnorm(NumericVector vals)
+{ TNORM_IMPL(internalGoguenTnorm); }
+
+// [[Rcpp::export(name=".pgoguen.tnorm")]]
+NumericVector pgoguen_tnorm(List list)
+{ PTNORM_IMPL(internalGoguenTnorm); }
+
+// [[Rcpp::export(name=".goedel.tconorm")]]
+double goedel_tconorm(NumericVector vals)
+{ TNORM_IMPL(internalGoedelTconorm); }
+
+// [[Rcpp::export(name=".pgoedel.tconorm")]]
+NumericVector pgoedel_tconorm(List list)
+{ PTNORM_IMPL(internalGoedelTconorm); }
+
+// [[Rcpp::export(name=".lukas.tconorm")]]
+double lukas_tconorm(NumericVector vals)
+{ TNORM_IMPL(internalLukasTconorm); }
+
+// [[Rcpp::export(name=".plukas.tconorm")]]
+NumericVector plukas_tconorm(List list)
+{ PTNORM_IMPL(internalLukasTconorm); }
+
+// [[Rcpp::export(name=".goguen.tconorm")]]
+double goguen_tconorm(NumericVector vals)
+{ TNORM_IMPL(internalGoguenTconorm); }
+
+// [[Rcpp::export(name=".pgoguen.tconorm")]]
+NumericVector pgoguen_tconorm(List list)
+{ PTNORM_IMPL(internalGoguenTconorm); }
 
 // [[Rcpp::export(name=".goedel.residuum")]]
 NumericVector goedel_residuum(NumericVector x, NumericVector y)
@@ -154,7 +198,6 @@ NumericVector goedel_residuum(NumericVector x, NumericVector y)
     return res;
 }
 
-
 // [[Rcpp::export(name=".lukas.residuum")]]
 NumericVector lukas_residuum(NumericVector x, NumericVector y)
 {
@@ -175,7 +218,6 @@ NumericVector lukas_residuum(NumericVector x, NumericVector y)
     }
     return res;
 }
-
 
 // [[Rcpp::export(name=".goguen.residuum")]]
 NumericVector goguen_residuum(NumericVector x, NumericVector y)
@@ -198,7 +240,6 @@ NumericVector goguen_residuum(NumericVector x, NumericVector y)
     return res;
 }
 
-
 // [[Rcpp::export(name=".invol.neg")]]
 NumericVector invol_neg(NumericVector x)
 {
@@ -213,7 +254,6 @@ NumericVector invol_neg(NumericVector x)
     }
     return res;
 }
-
 
 // [[Rcpp::export(name=".strict.neg")]]
 NumericVector strict_neg(NumericVector x)
