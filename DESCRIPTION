@@ -1,8 +1,8 @@
 Package: lfl
 Type: Package
 Title: Linguistic Fuzzy Logic
-Version: 2.2.0
-Date: 2022-09-08
+Version: 2.2.1
+Date: 2024-10-22
 Authors@R: 
     person(given = "Michal",
            family = "Burda",
@@ -19,15 +19,14 @@ License: GPL-3
 Suggests: testthat, doMC, knitr, rmarkdown, R.rsp
 Depends: R (>= 3.6)
 Imports: Rcpp (>= 0.12.12), foreach, forecast (>= 5.5), plyr, tseries,
-        e1071, zoo
+        e1071, zoo, tibble
 LinkingTo: Rcpp
 NeedsCompilation: yes
-SystemRequirements: C++11
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.2
 Language: en-US
 VignetteBuilder: R.rsp
-Packaged: 2022-09-08 13:45:31 UTC; michal
+Packaged: 2024-10-22 13:51:00 UTC; michal
 Author: Michal Burda [aut, cre] (<https://orcid.org/0000-0002-4182-4407>)
 Repository: CRAN
-Date/Publication: 2022-09-08 14:22:55 UTC
+Date/Publication: 2024-10-22 14:10:02 UTC
